@@ -1,0 +1,6 @@
+Try if Json works doGet:
+deployment ID:
+AKfycbwkRmTyKbztC9Trgb9GEIwR1QtIhjQiWadjH8Tjpt9DeDvhT4_nCmNknpNIUJEU4Sx-mQ
+
+URL
+https://script.google.com/macros/s/AKfycbwkRmTyKbztC9Trgb9GEIwR1QtIhjQiWadjH8Tjpt9DeDvhT4_nCmNknpNIUJEU4Sx-mQ/exec
