@@ -1,6 +1,10 @@
 Try if Json works doGet:
 deployment ID:
 AKfycbwkRmTyKbztC9Trgb9GEIwR1QtIhjQiWadjH8Tjpt9DeDvhT4_nCmNknpNIUJEU4Sx-mQ
+doPost added:
+AKfycbwSzdewMpB8GS1ItNzH4JrzzOaiOW6Avyzr3qxIW1kEewaHK97hHOPoJTzKjDsBlxVuiA
 
 URL
 https://script.google.com/macros/s/AKfycbwkRmTyKbztC9Trgb9GEIwR1QtIhjQiWadjH8Tjpt9DeDvhT4_nCmNknpNIUJEU4Sx-mQ/exec
+doPost added:
+https://script.google.com/macros/s/AKfycbwSzdewMpB8GS1ItNzH4JrzzOaiOW6Avyzr3qxIW1kEewaHK97hHOPoJTzKjDsBlxVuiA/exec
