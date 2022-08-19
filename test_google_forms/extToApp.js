@@ -1,4 +1,19 @@
-const appUrl = 'https://script.google.com/macros/s/AKfycbyXjDsf9R3fznkbLSZNfIpr5TVYgwY6skAQGmfVDiHvfb28FhPYFYJUnrYY5eRzkFfpNA/exec';
+const appUrl = 'https://script.google.com/macros/s/AKfycbzYoXk-dBlaBz5--hzEN09GkO4-zNktbePEzJtcle6nmMnWWw6ojN_fDZPeskpIc3zh/exec';
+const DUMMY_DATA = [
+    {name: 'Taxonamir', location: 'Padre Island Pills', amount: '1', password: '23ifsadD##4_3'},
+    {name: 'Ramdonafin', location: 'Skitley Monks', amount: '10', password: 'g4wg4ga4##4_3'},
+    {name: 'Lalgalatron', location: 'Bloomington', amount: '6', password: '23ifsadD##4_3'},
+    {name: 'Loves Cure', location: 'Bloomington', amount: '6', password: '23ifsadD##4_3'},
+    {name: 'Flantirol', location: 'Padre Island Pills', amount: '1', password: '23ifsadD##4_3'},
+    {name: 'Zarcophagus', location: 'Skitley Monks', amount: '10', password: 'g4wg4ga4##4_3'},
+    {name: 'Lactilasmar', location: 'Bloomington', amount: '6', password: '23ifsadD##4_3'},
+    {name: 'Partonafir', location: 'Pugit Sound', amount: '3', password: '23ifsadD##4_3'},
+    {name: 'Broprotriaz', location: 'Suffiton Heights', amount: '1', password: '23ifsadD##4_3'},
+];
+
+function renderDummyCodes(){
+    DUMMY_DATA.forEach( data => createQrCode(data));
+}
 
 function testGS(){
     fetch(appUrl)
@@ -9,7 +24,7 @@ function testGS(){
         });
 }
 
-function testDoPost(){
+function testDoPost(data){
     fetch(appUrl, {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         mode: 'no-cors', // no-cors, *cors, same-origin
@@ -21,8 +36,33 @@ function testDoPost(){
         // },
         redirect: 'follow', // manual, *follow, error
         // referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-        body: JSON.stringify({name: "Frank"}) // body data type must match "Content-Type" header
+        body: JSON.stringify({
+            name: data.name, 
+            location: data.location, 
+            amount: data.amount, 
+            password: data.password,
+            timestamp: data.date}) // body data type must match "Content-Type" header
       });
+}
+function scanCode(actionUrl){
+    console.log(actionUrl);
+    let sendData = dataFromUrl(actionUrl);
+    let element = document.getElementById(sendData.name);
+    element.remove();
+    testDoPost(sendData);
+}
+function dataFromUrl(actionUrl){
+    // let urlComponents = actionUrl.split('?');
+    // let url = `${urlComponents[0]?}.urlEncode(urlComponents[1])}?${urlComponents[1].urlEncode}`
+
+    const urlParams = new URLSearchParams(actionUrl);
+    const name = urlParams.get('name');
+    const location = urlParams.get('location');
+    const amount = urlParams.get('amount');
+    const password = urlParams.get('passwordHash');
+    const date = new Date();
+    console.log(name, location, amount, password, date);
+    return {name, location, amount, password, date};
 }
 
 function collectFormData(){
@@ -39,11 +79,14 @@ function testQrFuncs(){
     createQrCode(data);
 }
 
-function buildCanvasCard(qrCodeImage, data){
+function buildCanvasCard(qr, data){
+    console.log(qr.value);
+    let qrCodeImage = qr.image;
     console.log(data);
     let size = '200px';
     let div = document.getElementById('card_template');
     let newCard = div.cloneNode(true);
+    newCard.setAttribute('id', data.name);
     newCard.classList.remove('hidden');
     let image = newCard.querySelector('img');
     image.parentElement.removeChild(image);
@@ -58,6 +101,9 @@ function buildCanvasCard(qrCodeImage, data){
     list.children[0].textContent = `Location: ${data.location}`;
     list.children[1].textContent = `Amount: ${data.amount}`;
     list.children[2].textContent = `Password: ${data.password}`;
+    //add button click handler
+    let button = newCard.querySelector('button');
+    button.setAttribute('onClick', `scanCode('${qr.value}')`);
 
     // qrCodeImage.removeAttribute('height');
     // qrCodeImage.removeAttribute('width');
@@ -72,6 +118,9 @@ function createQrCode(data){
     let {name, location, password, amount} = data;
 
     let canvas = document.getElementById('canvas_div');
+    let value = `${baseUrl}?x=&name=${name}&passwordHash=${encodeURIComponent(password)}&location=${location}&amount=${amount}`.replace(/\ /g, '%20');
+    //added sacrifical character ?x= so 'name' wouldn't be first param... first param is returning 
+    //null in the dataFromUrl function, and idk why
     let qr = new QRious({
         background: 'white',
         backgroundAlpha: 0.8,
@@ -80,11 +129,11 @@ function createQrCode(data){
         level: 'H',
         padding: 25,
         size: 500,
-        value: `${baseUrl}?name=${name}?passwordHash=${password}?location=${location}$amount=${amount}`,
+        value: value,
         element: canvas
     });
     // qr.canvas.parentNode.appendChild(qr.image);
-    let canvasCard = buildCanvasCard(qr.image, data);
+    let canvasCard = buildCanvasCard(qr, data);
     canvas.appendChild(canvasCard);
 }
 
