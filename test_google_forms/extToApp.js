@@ -39,14 +39,32 @@ function testQrFuncs(){
     createQrCode(data);
 }
 
-function buildCanvasCard(qrCodeImage){
+function buildCanvasCard(qrCodeImage, data){
+    console.log(data);
+    let size = '200px';
     let div = document.getElementById('card_template');
     let newCard = div.cloneNode(true);
     newCard.classList.remove('hidden');
     let image = newCard.querySelector('img');
-    image.setAttribute('src', qrCodeImage);
+    image.parentElement.removeChild(image);
+    // image.removeAttribute('class');
+    swapListOfStyles(image, qrCodeImage);
+    // swapComputedStyles(image, qrCodeImage);
+    qrCodeImage.setAttribute('width', size);
+    qrCodeImage.setAttribute('height', size);
+
+    newCard.querySelector('h5').textContent = `Perscription: ${data.name}`;
+    let list = newCard.querySelector('ul');
+    list.children[0].textContent = `Location: ${data.location}`;
+    list.children[1].textContent = `Amount: ${data.amount}`;
+    list.children[2].textContent = `Password: ${data.password}`;
+
+    // qrCodeImage.removeAttribute('height');
+    // qrCodeImage.removeAttribute('width');
+    newCard.insertBefore(qrCodeImage, newCard.firstChild);
     return newCard;
 }
+// WHEN YOU SIT BACK DOWN, JUST GET THE DATA INTO THE DIV THE STYLE THE THING 
 
 function createQrCode(data){
 
@@ -66,11 +84,20 @@ function createQrCode(data){
         element: canvas
     });
     // qr.canvas.parentNode.appendChild(qr.image);
-    let canvasCard = buildCanvasCard();
-    //when you sit BACK DOWN, TRY DOING THE APPENDING HERE?  OR IN THE FUNC?
+    let canvasCard = buildCanvasCard(qr.image, data);
     canvas.appendChild(canvasCard);
 }
 
+function swapComputedStyles(sourceNode, targetNode) {
+    const computedStyle = window.getComputedStyle(sourceNode);
+    Array.from(computedStyle).forEach(key => targetNode.style.setProperty(key, computedStyle.getPropertyValue(key), computedStyle.getPropertyPriority(key)))
+}
+
+function swapListOfStyles(sourceNode, targetNode){
+    console.log(sourceNode.classList.value);
+    // targetNode.removeAttribute('class');
+    targetNode.setAttribute('class', sourceNode.classList.value);
+}
 
 document.getElementById('btn').addEventListener('click', testGS);
 document.getElementById('btn2').addEventListener('click', testDoPost);
