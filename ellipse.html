@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ellipse Equation Testing</title>
+    <style>
+        svg {
+            width: 500px;
+            height: 500px;
+            background-color: pink;
+        }
+
+        .circle-container {
+            width: 500px;
+            height: 500px;
+            border: black solid 3px;
+        }
+
+        .circle {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            animation: yAxis 2s infinite alternate;
+            background-color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Specify your ellipse variables</h1>
+    <h2>dx * x^2 + dy * y^2 = r </h2>
+    <h2>x=cx+rx*cos(theta) and y=cy+ry*sin(theta)</h2>
+    <input type="range" name="theta" id="theta" min-value="0" max-value="3.1415" step="0.01" value="0">
+    <div class="form-container">
+        <form action="">
+            <label for="dx"></label>
+        </form>
+    </div>
+    <svg viewPort="0 0 500 500">
+
+    </svg>
+    <svg viewPort="0 0 500 500">
+        <path d="M 350,250 a250,170 0 0,0 100,250" style="fill:none; stroke:red; stroke-width:6px" />
+    </svg>
+    <div class="circle-container">
+        <div class="circle">
+
+        </div>
+    </div>
+    <script>
+
+        //x=cx+rx*cos(theta) and y=cy+ry*sin(theta)
+        function getXandYfromTheta(theta, cx = 250, rx = 150, cy = 250, ry = 80) {
+            let x = (cx + rx)*Math.cos(theta);
+            console.log(x);
+            return x;
+        }
+        //time required is half that way and half this way
+        function percentToCircle(percent){
+            return Math.sin((Math.PI/2)*percent)
+        }
+        let slider = document.getElementById('theta');
+        slider.addEventListener('input', (e) => {
+            getXandYfromTheta(e.target.value);
+        });
+
+        // let r = 100;
+        let dX = 150;
+        let dY = 80;
+        let ellipse = document.createElementNS("http://www.w3.org/2000/svg", 'ellipse');
+        ellipse.setAttribute('rx', dX);
+        ellipse.setAttribute('ry', dY);
+        // ellipse.setAttribute('rx', Math.sqrt( r / dX ));
+        // ellipse.setAttribute('ry', Math.sqrt( r / dY ));
+        ellipse.setAttribute('cx', 250);
+        ellipse.setAttribute('cy', 250);
+        ellipse.style.strokeWidth = '4px';
+        ellipse.style.stroke = 'black';
+        let parent = document.querySelector('svg');
+        parent.appendChild(ellipse);
+
+
+    </script>
+</body>
+
+</html>

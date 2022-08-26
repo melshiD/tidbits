@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planets and Filters</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-flow: column;
+            background: url('./start_night.svg');
+            box-sizing: border-box;
+        }
+        svg{
+            width: 52%;
+        }
+        .slider-container{
+            justify-content: center;
+            justify-self: center;
+            width: 80%;
+            display: flex;
+        }
+        #orbit_angle{
+            align-self: center;
+            width: 50%;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="slider-container">
+        <input type="range" name="angle" 
+               id="orbit_angle" min="1" max="10" value="1" step="0.1"
+        >
+    </div>
+    <svg
+        viewBox="0 0 1000 1000"
+        role="img"
+        aria-labelledby="planets"
+        aria-describedby="planetsDescription"
+    >
+        <title id="planets">Experimenting with SVG filters</title>
+        <desc id="planetsDescription">For 'cheap', in-browser image processing</desc>
+        <defs>
+            <filter id="saturn">
+                <feTurbulence baseFrequency="0.01 0.06" 
+                              seed="14" 
+                              numOctaves="6"
+                              type="fractalNoise" 
+                />
+                <feComposite operator="in" in="SourceGraphic" />
+            </filter>
+        </defs>
+        <g class="js-svg-wrapper">
+        </g>    
+    </svg>
+    <button class="js-refresh-button">Refresh</button>
+    <button id="createAnimation">Animate</button>
+    <script src="planets.js"></script>
+</body>
+</html>
