@@ -1,0 +1,7 @@
+I've been fighting with SVG in that when I dynamically create elements to
+describe animations and paths for the (also generated) planet shapes,
+the browser does not regard the tags as having animating properties. 
+The markup is apprearing in the elements tab of the dev tools, but
+the shapes will not animate as they would if I had just had-coded the
+tags.  Therefore, I'm going to 'template' the main skeleton in markup
+and use JS to fill in values.  Hopefully this yields the result we need

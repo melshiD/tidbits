@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planets to be Filled in</title>
+</head>
+<body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Planets and Filters</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
     <style>
@@ -59,13 +68,20 @@
                 <feComposite operator="in" in="SourceGraphic" />
             </filter>
         </defs>
-        <path id="venere" fill="none" stroke="white" stroke-width="2" d="M 650, 150 a 75,150 0 1,0 1,0 z" />
-
-        <g class="js-svg-wrapper">
+        <g id="start_and_planets">
+            <circle class="star" id="star"></circle>
+            <circle class="planet">
+                <animateMotion 
+                    dur="" 
+                    begin=""
+                    repeatCount=""
+                    path="">
+                </animateMotion>
+            </circle>
         </g>    
     </svg>
     <button class="js-refresh-button">Refresh</button>
     <button id="createAnimation">Animate</button>
-    <script src="planets.js"></script>
+    <script src="planets_2.js"></script>
 </body>
 </html>

@@ -38,15 +38,18 @@ function draw(parentToken = '.js-svg-wrapper') {
 
     let size = randPlanetSize();
     let distance = randOrbitDistance();
+    let count = 1;
 
     while (distance + size <= width / 2) {
-        drawPlanet(size, distance, 'g');
-        drawOrbit(distance, 'g');
+        // drawPlanetWithOrbitPath(size, distance, count);
+        drawPlanet(size, distance, count, 'g');
+        // drawOrbit(distance, 'g');
 
         size = randPlanetSize();
         distance += randOrbitDistance();
+        count ++;
     }
-    addOrbitListeners();
+    // addOrbitListeners();
 }
 
 function drawStar(size, parentToken) {
@@ -75,7 +78,7 @@ function drawStar(size, parentToken) {
     parent.appendChild(circle);
 }
 
-function drawPlanet(size = 50, distance = 200, parentToken = 'g') {
+function drawPlanet(size = 50, distance = 200, count, parentToken = 'g') {
 
     const hue = randomInt(0, 360);
     const saturation = randomInt(70, 100);
@@ -88,8 +91,30 @@ function drawPlanet(size = 50, distance = 200, parentToken = 'g') {
     circle.setAttribute('cx', width / 2 + distance);
     circle.setAttribute('cy', height / 2);
     circle.setAttribute('r', size);
+    circle.setAttribute('id', `planet_${count}`);
     circle.classList.add('planet');
-    parent.appendChild(circle);
+    // parent.appendChild(circle);
+
+    // let orbitPath = drawPlanetOrbitPath(distance, count);
+    let animation = document.createElementNS(svgNs, 'animateMotion');
+    // animation.setAttribute('xlink:href', `#planet_${count}`);
+    // animation.setAttribute('begin', `click`);
+    animation.setAttribute('repeatCount', 'indefinite');
+    animation.setAttribute('dur', '5s');
+
+    let link = document.createElementNS(svgNs, 'mpath');
+    link.setAttribute('xlink:href', '#venere');
+    
+    parent.append(circle); 
+    circle.append(animation);
+    animation.append(link);
+
+
+    // animation.append(link);
+    // animation.setAttribute('path', `M 500,500 a ${distance},${distance} 0 1,0 1,0`);
+    // M 650, 150 a 75,150 0 1,0 1,0
+//     circle.append(animation);
+//     parent.append(circle);
 }
 
 function drawOrbit(distance = 200, parentToken = 'g') {
@@ -104,6 +129,13 @@ function drawOrbit(distance = 200, parentToken = 'g') {
     ellipse.setAttribute('ry', distance);
     ellipse.setAttribute('orbit', distance);
     parent.appendChild(ellipse);
+}
+
+function drawPlanetOrbitPath(distance, count){
+    let path = document.createAttributeNS(svgNs, 'path');
+    path.setAttribute('d', `M 500,500 a ${distance},${distance} 0 0,1 0,1`);
+    path.setAttribute('id', `orbit_path_${count}`);
+    return path;
 }
 
 function refresh() {
@@ -123,32 +155,4 @@ refreshButton.addEventListener('click', refresh);
 function addOrbitListeners() {
     let angleAdjust = document.getElementById('orbit_angle');
     angleAdjust.addEventListener('input', listenerFunc);
-}
-
-//animation code
-let tween;
-let path = document.querySelector('ellipse');
-let planet = document.querySelector('.planet');
-// let motionPath = MorphSVGPlugin.pathDataToBezier(path, { align: planet });
-
-//offest the balloon by half width and half height to make it appear centered on path
-// TweenLite.set(planet, { xPercent: -50, yPercent: -50 });
-
-// console.log(motionPath)
-
-// document.querySelector("#createAnimation").click(function () {
-
-//     tween = TweenLite.to(planet, 2, { bezier: { values: motionPath, type: "cubic" }, onUpdate: updateSlider });
-
-// });
-function animatePlanet(){
-    let planet = document.querySelector('.planet');
-    let orbit = document.querySelector('ellipse');
-
-    let orbitBBox = orbit.getBBox();
-    console.log(orbitBBox);
-}
-
-function posYValue(xValue){
-    
 }

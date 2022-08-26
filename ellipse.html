@@ -7,9 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ellipse Equation Testing</title>
     <style>
+        body,
+        html {
+            /* overflow: hidden; */
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+
+        }
+
         svg {
-            width: 500px;
-            height: 500px;
+            width: 100%;
+            height: 100%;
             background-color: pink;
         }
 
@@ -20,11 +31,27 @@
         }
 
         .circle {
-            position: relative;
+            /* position: relative; */
             width: 50px;
             height: 50px;
-            animation: yAxis 2s infinite alternate;
-            background-color: black;
+            border-radius: 50%;
+            fill: red;
+        }
+
+        input {
+            width: 500px;
+        }
+
+        .svg-container {
+            width: 500px;
+            height: 500px;
+        }
+
+        canvas {
+            /* width: 500px;
+            height: 500px;
+            border: pink solid 2px;
+            border-radius: 3rem; */
         }
     </style>
 </head>
@@ -33,54 +60,130 @@
     <h1>Specify your ellipse variables</h1>
     <h2>dx * x^2 + dy * y^2 = r </h2>
     <h2>x=cx+rx*cos(theta) and y=cy+ry*sin(theta)</h2>
-    <input type="range" name="theta" id="theta" min-value="0" max-value="3.1415" step="0.01" value="0">
+    <input type="range" name="phase" id="phase" min="0" max="99.99" value="0" step="0.01">
     <div class="form-container">
         <form action="">
             <label for="dx"></label>
         </form>
     </div>
-    <svg viewPort="0 0 500 500">
+    <div class="svg-container">
+        <svg viewBox="0 0 1000 1000">
+            <ellipse id="ellipse" cx="500" cy="500" rx="300" ry="150" stroke="black" fill="none"></ellipse>
+            <circle r="5" fill="red">
+                <animatemotion dur="10s" repeatCount="indefinite">
+                    <mpath xlink:href="#venere"></mpath>
+                </animatemotion>
+            </circle>
+            <circle r="5" fill="red">
+                <animatemotion dur="8s" repeatCount="indefinite">
+                    <mpath xlink:href="#ellipse_path"></mpath>
+                </animatemotion>
+            </circle>
+            <!-- <path id="venere" fill="none" stroke="white" stroke-width="2" d="M 650, 150 a 75,150 0 1,0 1,0" /> -->
+            <!-- <path id="venere" fill="none" stroke="white" stroke-width="2" d="M 650, 150 a 75,150 0 1,0 1,0" /> -->
+            <circle id="my_circle" r="30" cx="50" cy="50" fill="orange">
+                <animate attributeName="cx" from="50" to="500" dur=".1s" begin="click" fill="remove"></animate>
+            </circle>
+            <!-- <ellipse id="ellipse_path" cx="500" cy="500" rx="200" ry="30"></ellipse> -->
+            <path d="M 500,500 a 200,200 0 1,0 1,0" id="ellipse_path"></path>
+        </svg>
+        <svg viewBox="0 0 1000 1000">
+            <!-- <ellipse id="ellipse" cx="500" cy="500" rx="300" ry="150" stroke="black" fill="none"></ellipse> -->
+            <circle id="circle" class='circle' cx="500" cy="500" r="25"></circle>
+            <circle id="circle_2" style="fill: blue" class='circle' cx="500" cy="500" r="17"></circle>
+            <circle r="5" fill="red">
+                <!-- <animateMotion dur="10s" repeatCount="indefinite" path="M 650, 150 a 75,150 0 1,0 1,0" /> -->
+            </circle>
+            <!-- <path id="venere" fill="none" stroke="white" stroke-width="2" d="M 650, 150 a 75,150 0 1,0 1,0" /> -->
+            <path id="venere" fill="none" stroke="white" stroke-width="2" d="M 550, 150 a 150,80 0 1,0 1,0 z" />
+        </svg>
 
-    </svg>
-    <svg viewPort="0 0 500 500">
-        <path d="M 350,250 a250,170 0 0,0 100,250" style="fill:none; stroke:red; stroke-width:6px" />
-    </svg>
-    <div class="circle-container">
-        <div class="circle">
-
-        </div>
     </div>
-    <script>
+    <canvas>
 
-        //x=cx+rx*cos(theta) and y=cy+ry*sin(theta)
-        function getXandYfromTheta(theta, cx = 250, rx = 150, cy = 250, ry = 80) {
-            let x = (cx + rx)*Math.cos(theta);
-            console.log(x);
-            return x;
+    </canvas>
+
+    <script>
+        let circle = document.querySelector('.circle');
+
+        function unitCircYFromPercent(percent) {
+            return Math.sin((Math.PI / 2) * percent);
         }
-        //time required is half that way and half this way
-        function percentToCircle(percent){
-            return Math.sin((Math.PI/2)*percent)
+        function unitCircXFromPercent(percent) {
+            return Math.cos((Math.PI / 2) * percent);
         }
-        let slider = document.getElementById('theta');
+
+        function phaseMapper(value) {
+            let circle = document.getElementById('circle');
+            let circle2 = document.getElementById('circle_2');
+            let ellipse = document.getElementById('ellipse');
+            let { cx, cy, rx, ry } = ellipse.attributes;
+
+
+            let xProgress = (value > 50 ? 50 - value % 50 : value) * 2 / 100;
+            let yProgress = unitCircYFromPercent(value / 25);
+
+            console.log(`xProgress: ${xProgress}, yProgress: ${yProgress}`);
+
+            circle.setAttribute('cx', ((parseInt(cx.value, 10) -
+                parseInt(rx.value, 10))) +
+                parseInt(rx.value, 10) * 2 *
+                unitCircYFromPercent(xProgress));
+
+            circle.setAttribute('cy', (parseInt(cy.value, 10) +
+                parseInt(ry.value, 10) * yProgress));
+
+            let otherX = (parseInt(cx.value) -
+                parseInt(rx.value)) +
+                parseInt(rx.value) * 2 * (xProgress);
+
+            // let otherY = 
+
+            circle2.setAttribute('cx', otherX);
+            circle2.setAttribute('cy', (parseInt(cy.value, 10) +
+                parseInt(ry.value, 10) * Math.cos(-yProgress)));
+            // console.log(otherX);
+            // console.log(unitCircYFromPercent(value / 25));
+        }
+        let slider = document.getElementById('phase');
         slider.addEventListener('input', (e) => {
-            getXandYfromTheta(e.target.value);
+            phaseMapper(e.target.value);
         });
 
+        function letTheCanvasShine() {
+            let canvas = document.querySelector('canvas');
+            var ctx = canvas.getContext("2d");
+
+            var step = 2 * Math.PI / 20;  // see note 1
+            var h = 150;
+            var k = 150;
+            var r = 50;
+
+            ctx.beginPath();  //tell canvas to start a set of lines
+
+            for (var theta = 0; theta < 2 * Math.PI; theta += step) {
+                var x = h + r * Math.cos(theta);
+                var y = k - r * Math.sin(theta);    //note 2.
+                ctx.lineTo(x, y);
+            }
+
+            ctx.closePath();     //close the end to the start point
+            ctx.stroke();        //actually draw the accumulated lines
+        }
         // let r = 100;
-        let dX = 150;
-        let dY = 80;
-        let ellipse = document.createElementNS("http://www.w3.org/2000/svg", 'ellipse');
-        ellipse.setAttribute('rx', dX);
-        ellipse.setAttribute('ry', dY);
-        // ellipse.setAttribute('rx', Math.sqrt( r / dX ));
-        // ellipse.setAttribute('ry', Math.sqrt( r / dY ));
-        ellipse.setAttribute('cx', 250);
-        ellipse.setAttribute('cy', 250);
-        ellipse.style.strokeWidth = '4px';
-        ellipse.style.stroke = 'black';
-        let parent = document.querySelector('svg');
-        parent.appendChild(ellipse);
+        // let dX = 150;
+        // let dY = 80;
+        // let ellipse = document.createElementNS("http://www.w3.org/2000/svg", 'ellipse');
+        // ellipse.setAttribute('rx', dX);
+        // ellipse.setAttribute('ry', dY);
+        // // ellipse.setAttribute('rx', Math.sqrt( r / dX ));
+        // // ellipse.setAttribute('ry', Math.sqrt( r / dY ));
+        // ellipse.setAttribute('cx', 250);
+        // ellipse.setAttribute('cy', 250);
+        // ellipse.style.strokeWidth = '4px';
+        // ellipse.style.stroke = 'black';
+        // let parent = document.querySelector('svg');
+        // parent.appendChild(ellipse);
 
 
     </script>
