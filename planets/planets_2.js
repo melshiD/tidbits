@@ -91,13 +91,55 @@ function drawPlanet(size = 50, distance = 200, count, parentToken = 'g') {
     newPlanet.style.fill = color;
     newPlanet.setAttribute('r', size);
     newPlanet.setAttribute('id', `planet_${count}`);
+    newPlanet.setAttribute('filter', `url(#${count}_texture)`);
+
+    //filtering set up here
+    const turbulenceType = randBool() ? 'fractalNoise' : 'turbulence';
+    //the freq x and y values can yileld MANY effects with the 
+    //proper constraints
+    const baseFrequencyX = random(0.5, 2) / size;
+    const baseFrequencyY = random(2, 4) / size;
+    const numOctaves = randomInt(3, 10);
+    const seed = Math.random();
+    //lighting values
+    const elevation = randomInt(30, 100);
+    const surfaceScale = randomInt(5, 10);
+
+    let filterTemplate = document.getElementById('filter_template');
+    let newFilter = filterTemplate.cloneNode(true);
+
+    newFilter.setAttribute('id', `${count}_texture`);
+    let turbFilter = document.getElementById('turb_template');
+    let newTurbFilter = turbFilter.cloneNode(true);
+    newTurbFilter.removeAttribute('id');
+    newTurbFilter.attributes.baseFrequency.value = `${baseFrequencyX} ${baseFrequencyY}`;
+    newTurbFilter.attributes.type.value = `${turbulenceType}`;
+    newTurbFilter.attributes.seed.value = `${seed}`;
+    newTurbFilter.attributes.numOctaves.value = `${numOctaves}`;
+    
+    let lightingFilter = document.getElementById('diff_lighting_template')
+                                 .cloneNode(true);
+
+    lightingFilter.setAttribute('lighting-color', color);
+    lightingFilter.attributes.surfaceScale.value = `${surfaceScale}`;
+    lightingFilter.firstElementChild.attributes.elevation.value = `${elevation}`;
+
+    let composite = document.getElementById('fe_composite_template')
+                            .cloneNode(true);
+
+    newFilter.appendChild(newTurbFilter);
+    newFilter.appendChild(lightingFilter);
+    newFilter.appendChild(composite);
+
+    document.querySelector('defs').appendChild(newFilter);
+
 
     let orbitPath = newPlanet.querySelector('animateMotion');
     console.log(orbitPath);
     //M startPoint a rx,ry 0 1,0 1,0 z
     let path = `M 500,${500-distance} a ${distance},${distance} 0 1,0 1,0`;
     orbitPath.attributes['path'].value = path;
-    orbitPath.attributes['dur'].value = randomInt(5, 20);
+    orbitPath.attributes['dur'].value = randomInt(18, 50);
     orbitPath.attributes['begin'].value = "-3s";
     orbitPath.attributes['repeatCount'].value = "indefinite";
     orbitPath.setAttribute('distance', distance);
@@ -112,7 +154,14 @@ function refresh() {
     draw();
 }
 draw();
+addOrbitListeners();
 
+function swapFirstPlanet(){
+    let star = document.getElementById('star');
+    let parent = document.querySelector('g');
+    star.remove();
+    parent.appendChild(star);
+}
 
 const refreshButton = document.querySelector('.js-refresh-button');
 refreshButton.addEventListener('click', refresh);
