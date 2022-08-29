@@ -85,13 +85,22 @@ function drawPlanet(size = 50, distance = 200, count, parentToken = 'g') {
     const color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 
     let parent = document.querySelector(parentToken);
-    let planet = document.querySelector('.planet');
-    let newPlanet = planet.cloneNode(true);
+    let planetNShadow = document.getElementById('planet_g_template');
+    let newPlanetNShadow = planetNShadow.cloneNode(true);
+    newPlanetNShadow.setAttribute('id', `planet_g_${count}`);
+
+    let newPlanet = planetNShadow.querySelector('.planet');
+    let planetShadow = planetNShadow.querySelector('.shadow');
+    
+    planetShadow.setAttribute('id', `${count}_shadow`);
+
     newPlanet.setAttribute('id', `planet_${count}`);
     newPlanet.style.fill = color;
     newPlanet.setAttribute('r', size);
     newPlanet.setAttribute('id', `planet_${count}`);
     newPlanet.setAttribute('filter', `url(#${count}_texture)`);
+
+
 
     //filtering set up here
     const turbulenceType = randBool() ? 'fractalNoise' : 'turbulence';
@@ -134,8 +143,7 @@ function drawPlanet(size = 50, distance = 200, count, parentToken = 'g') {
     document.querySelector('defs').appendChild(newFilter);
 
 
-    let orbitPath = newPlanet.querySelector('animateMotion');
-    console.log(orbitPath);
+    let orbitPath = newPlanetNShadow.querySelector('animateMotion');
     //M startPoint a rx,ry 0 1,0 1,0 z
     let path = `M 500,${500-distance} a ${distance},${distance} 0 1,0 1,0`;
     orbitPath.attributes['path'].value = path;
@@ -144,7 +152,9 @@ function drawPlanet(size = 50, distance = 200, count, parentToken = 'g') {
     orbitPath.attributes['repeatCount'].value = "indefinite";
     orbitPath.setAttribute('distance', distance);
 
-    parent.appendChild(newPlanet);
+    parent.append(newPlanetNShadow);
+    // parent.appendChild(newPlanet);
+    // parent.appendChild(planetShadow);
 }
 function refresh() {
     let group = document.querySelector('g');

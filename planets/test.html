@@ -1,11 +1,13 @@
-<html lang="en"><head>
+<html lang="en">
+
+<head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Planets and Filters</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
     <style>
-        body{
+        body {
             margin: 0;
             padding: 0;
             width: 100vw;
@@ -17,22 +19,25 @@
             background: url('./start_night.svg');
             box-sizing: border-box;
         }
-        svg{
+
+        svg {
             width: 52%;
         }
-        .slider-container{
+
+        .slider-container {
             justify-content: center;
             justify-self: center;
             width: 80%;
             display: flex;
         }
-        #orbit_angle{
+
+        #orbit_angle {
             align-self: center;
             width: 50%;
         }
-
     </style>
 </head>
+
 <body>
     <div class="slider-container">
         <input type="range" name="angle" id="orbit_angle" min="1" max="10" value="1" step="0.1">
@@ -46,9 +51,43 @@
                 <feTurbulence baseFrequency="0.01 0.06" seed="14" numOctaves="6" type="fractalNoise"></feTurbulence>
                 <feComposite operator="in" in="SourceGraphic"></feComposite>
             </filter>
+
         </defs>
         <g class="js-svg-wrapper">
-        <circle cx="500" cy="500" r="56" filter="url(#saturn)" style="fill: rgb(250, 205, 107);"></circle><circle cx="627" cy="500" r="13" id="planet_1" class="planet" style="fill: rgb(124, 168, 233);"><animatemotion repeatcount="indefinite" dur="5s"><mpath xlink:href="#venere"></mpath></animatemotion></circle><circle cx="754" cy="500" r="11" id="planet_2" class="planet" style="fill: rgb(153, 101, 230);"><animatemotion repeatcount="indefinite" dur="5s"><mpath xlink:href="#venere"></mpath></animatemotion></circle><circle cx="868" cy="500" r="28" id="planet_3" class="planet" style="fill: rgb(69, 210, 232);"><animatemotion repeatcount="indefinite" dur="5s"><mpath xlink:href="#venere"></mpath></animatemotion></circle><circle cx="963" cy="500" r="14" id="planet_4" class="planet" style="fill: rgb(69, 220, 46);"><animatemotion repeatcount="indefinite" dur="5s"><mpath xlink:href="#venere"></mpath></animatemotion></circle></g>    
+            <path fill="none" stroke="lightgrey" d="M20,50 C20,-50 180,150 180,50 C180-50 20,150 20,50 z" />
+
+            <circle r="5" fill="red">
+                <animateMotion dur="10s" repeatCount="indefinite"
+                    path="M20,50 C20,-50 180,150 180,50 C180-50 20,150 20,50 z" />
+            </circle>
+            <animateMotion dur="10s" repeatCount="indefinite"
+            path="M20,50 C20,-50 180,150 180,50 C180-50 20,150 20,50 z" />
+            </g>
+            <g>
+        <circle cx="500" cy="500" r="56" filter="url(#saturn)" style="fill: rgb(250, 205, 107);"></circle>
+        <circle cx="627" cy="500" r="13" id="planet_1" class="planet" style="fill: rgb(124, 168, 233);">
+            <animatemotion repeatcount="indefinite" dur="5s">
+                <mpath xlink:href="#venere"></mpath>
+            </animatemotion>
+        </circle>
+        <circle cx="754" cy="500" r="11" id="planet_2" class="planet" style="fill: rgb(153, 101, 230);">
+            <animatemotion repeatcount="indefinite" dur="5s">
+                <mpath xlink:href="#venere"></mpath>
+            </animatemotion>
+        </circle>
+        <circle cx="868" cy="500" r="28" id="planet_3" class="planet" style="fill: rgb(69, 210, 232);">
+            <animatemotion repeatcount="indefinite" dur="5s">
+                <mpath xlink:href="#venere"></mpath>
+            </animatemotion>
+        </circle>
+        <circle cx="963" cy="500" r="14" id="planet_4" class="planet" style="fill: rgb(69, 220, 46);">
+            <animatemotion repeatcount="indefinite" dur="5s">
+                <mpath xlink:href="#venere"></mpath>
+            </animatemotion>
+        </circle>
+        </g>
     </svg>
-</script>
-</body></html>
+    </script>
+</body>
+
+</html>

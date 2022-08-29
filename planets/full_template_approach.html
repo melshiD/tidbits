@@ -59,13 +59,18 @@
         <title id="planets">Experimenting with SVG filters</title>
         <desc id="planetsDescription">For 'cheap', in-browser image processing</desc>
         <defs>
+            <!-- raw filter template material  -->
             <filter id="filter_template"></filter>
             <feTurbulence id="turb_template" type="" baseFrequency="" seed="" numOctaves=""></feTurbulence>
             <feDiffuseLighting id="diff_lighting_template" lighting-color="" surfaceScale="">
                 <feDistantLight azimuth="" elevation=""></feDistantLight>
             </feDiffuseLighting>
             <feComposite id="fe_composite_template" operator="in" in2="SourceGraphic"/>
-            
+            <radialGradient id="rad_grad_template">
+                <stop offset="0%" stop-color="hsla(0, 0%, 0%, 0)"></stop>
+                <stop offset="90%" stop-color="hsla(0, 0%, 0%, 1)"></stop>
+            </radialGradient>
+
             <filter id="my-filter">
                 <feTurbulence baseFrequency="0.1" numOctaves="1" seed="0"/>
                 <feDiffuseLighting lighting-color="DodgerBlue" surfaceScale="10">
@@ -83,16 +88,18 @@
                 <feComposite operator="in" in="SourceGraphic" />
             </filter>
         </defs>
-        <g id="start_and_planets">
+        <g id="stars_and_planets">
             <circle class="star" id="star"></circle>
-            <circle class="planet">
+            <g id="planet_g_template" >
+                <circle class="shadow" r="800" fill="url(#rad_grad_template)"></circle>
+                <circle class="planet"></circle>
                 <animateMotion 
                     dur="" 
                     begin=""
                     repeatCount=""
                     path="">
                 </animateMotion>
-            </circle>
+            </g>
         </g>    
     </svg>
     <button class="js-refresh-button">Refresh</button>
