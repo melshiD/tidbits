@@ -89,25 +89,23 @@
             </filter>
         </defs>
         <g id="stars_and_planets">
-            <circle class="star" id="star"></circle>
+            <circle class="star" id="star" cy="500" cx="500" r="50" filter="url(#saturn)" fill="#990000"></circle>
             <g id="planet_g_template" >
                 <animateMotion 
-                    dur="" 
-                    begin=""
-                    repeatCount=""
-                    path="">
+                    dur="13" 
+                    begin="-3"
+                    repeatCount="indefinite"
+                    path="M 500,200 a 300,300 0 1,0 1,0 0">
                 </animateMotion>
-                <clipPath id="" >
-                    <circle r=""></circle>
+                <clipPath id="shadow_clip_path" >
+                    <circle  r="18"></circle>
                 </clipPath>
-                <circle class="planet"></circle>
-                <circle class="shadow" r="" fill="url(#rad_grad_template)" clip-path=""></circle>
+                <!-- <g clip-path="url(#shadow_clip_path)"> -->
+                <circle class="planet" r="18" fill="red"></circle>
+                <circle class="shadow" cx="50" cy="40" r="118" fill="url(#rad_grad_template)" clip-path="url(#shadow_clip_path)"></circle>
             </g>
         </g>    
     </svg>
-    <button class="js-refresh-button">Refresh</button>
-    <button id="createAnimation">Animate</button>
-    <script src="planets_2.js"></script>
 </body>
 </html>
 

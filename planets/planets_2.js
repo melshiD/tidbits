@@ -32,9 +32,9 @@ const listenerFunc = (ev) => {
     });
 };
 
-function draw(parentToken = '.js-svg-wrapper') {
+function draw() {
     let starSize = randomInt(70, 130);
-    drawStar(starSize, parentToken);
+    drawStar(starSize);
 
     const randPlanetSize = () => randomInt(7, 38);
     const randOrbitDistance = () => randomInt(90, 130);
@@ -44,16 +44,16 @@ function draw(parentToken = '.js-svg-wrapper') {
     let count = 1;
 
     while (distance + size <= width / 2) {
-        drawPlanet(size, distance, count, 'g');
+        drawPlanet(size, distance, count, '#stars_and_planets');
 
         size = randPlanetSize();
         distance += randOrbitDistance();
         count ++;
     }
-    // addOrbitListeners();
+    return document.getElementById('stars_and_planets');
 }
 
-function drawStar(size, parentToken) {
+function drawStar(size) {
     const hueRange = randFromArray([
         [330, 390],
         [40, 60],
@@ -68,7 +68,7 @@ function drawStar(size, parentToken) {
     const lightness = randomInt(60, 80);
     const color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 
-    let parent = document.querySelector('g');
+    let parent = document.querySelector('#stars_and_planets');
     let star = document.getElementById('star');
     star.style.fill = color;
     star.setAttribute('cx', width / 2);
@@ -78,28 +78,37 @@ function drawStar(size, parentToken) {
     parent.appendChild(star);
 }
 
-function drawPlanet(size = 50, distance = 200, count, parentToken = 'g') {
+function drawPlanet(size = 50, distance = 200, count, parentToken) {
+    console.log(parentToken);
     const hue = randomInt(0, 360);
     const saturation = randomInt(70, 100);
     const lightness = randomInt(50, 70);
     const color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 
-    let parent = document.querySelector(parentToken);
+    let parent = document.querySelector('#stars_and_planets');
     let planetNShadow = document.getElementById('planet_g_template');
     let newPlanetNShadow = planetNShadow.cloneNode(true);
     newPlanetNShadow.setAttribute('id', `planet_g_${count}`);
 
-    let newPlanet = planetNShadow.querySelector('.planet');
-    let planetShadow = planetNShadow.querySelector('.shadow');
+    let newPlanet = newPlanetNShadow.querySelector('.planet');
+    let planetShadow = newPlanetNShadow.querySelector('.shadow');
+
+    let shadowClipPath = newPlanetNShadow.querySelector('clipPath');
+    shadowClipPath.setAttribute('id', `shadow_clip_path_${count}`);
+    let clipPathCirc = shadowClipPath.querySelector('circle');
+    console.log(shadowClipPath);
+    clipPathCirc.setAttribute('r', size);
     
     planetShadow.setAttribute('id', `${count}_shadow`);
+    planetShadow.setAttribute('r', size*5);
+    planetShadow.setAttribute('cx', size/.4);
+    planetShadow.setAttribute('cy', size/.5);
+    planetShadow.setAttribute('clip-path', `url(#shadow_clip_path_${count})`);
 
     newPlanet.setAttribute('id', `planet_${count}`);
     newPlanet.style.fill = color;
     newPlanet.setAttribute('r', size);
-    newPlanet.setAttribute('id', `planet_${count}`);
     newPlanet.setAttribute('filter', `url(#${count}_texture)`);
-
 
 
     //filtering set up here
@@ -142,17 +151,18 @@ function drawPlanet(size = 50, distance = 200, count, parentToken = 'g') {
 
     document.querySelector('defs').appendChild(newFilter);
 
-
     let orbitPath = newPlanetNShadow.querySelector('animateMotion');
     //M startPoint a rx,ry 0 1,0 1,0 z
     let path = `M 500,${500-distance} a ${distance},${distance} 0 1,0 1,0`;
     orbitPath.attributes['path'].value = path;
     orbitPath.attributes['dur'].value = randomInt(18, 50);
+    // orbitPath.attributes['dur'].value = random(.3, 2);
     orbitPath.attributes['begin'].value = "-3s";
     orbitPath.attributes['repeatCount'].value = "indefinite";
     orbitPath.setAttribute('distance', distance);
 
     parent.append(newPlanetNShadow);
+    return planetNShadow
     // parent.appendChild(newPlanet);
     // parent.appendChild(planetShadow);
 }
@@ -163,7 +173,10 @@ function refresh() {
     }
     draw();
 }
-draw();
+
+let drawAndCleanup = draw();
+// drawAndCleanup.remove();
+
 addOrbitListeners();
 
 function swapFirstPlanet(){

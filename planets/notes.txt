@@ -5,3 +5,9 @@ The markup is apprearing in the elements tab of the dev tools, but
 the shapes will not animate as they would if I had just had-coded the
 tags.  Therefore, I'm going to 'template' the main skeleton in markup
 and use JS to fill in values.  Hopefully this yields the result we need
+
+
+Just concluded a two-day fight with getting clipping paths to work correctly when
+generated with JS/ copied and attributes set.  Using setAttributeNS for
+the clip path properties was keeping the path from being applied properly.
+Using the un-namespaced setAttribute() alled me to apply the clipping paths
