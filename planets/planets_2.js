@@ -25,7 +25,6 @@ const listenerFunc = (ev) => {
     let orbits = document.querySelectorAll('animateMotion');
     [...orbits].forEach(orbit => {
         let distance = orbit.getAttribute('distance');
-        console.log(distance);
         let newDist = distance / ev.target.value;
         let path = `M 500,${500-newDist} a ${distance},${newDist} 0 1,0 1,0`;
         orbit.setAttribute('path', path);
@@ -68,24 +67,21 @@ function drawStar(size) {
     const lightness = randomInt(60, 80);
     const color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 
-    let parent = document.querySelector('#stars_and_planets');
     let star = document.getElementById('star');
     star.style.fill = color;
     star.setAttribute('cx', width / 2);
     star.setAttribute('cy', height / 2);
     star.setAttribute('r', size / 2);
-    star.setAttribute('filter', 'url(#saturn)');
-    parent.appendChild(star);
+    // star.setAttribute('filter', 'url(#saturn)');
 }
 
 function drawPlanet(size = 50, distance = 200, count, parentToken) {
-    console.log(parentToken);
     const hue = randomInt(0, 360);
     const saturation = randomInt(70, 100);
     const lightness = randomInt(50, 70);
     const color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 
-    let parent = document.querySelector('#stars_and_planets');
+    let parent = document.querySelector(`#position_${5+count}`);
     let planetNShadow = document.getElementById('planet_g_template');
     let newPlanetNShadow = planetNShadow.cloneNode(true);
     newPlanetNShadow.setAttribute('id', `planet_g_${count}`);
@@ -96,7 +92,6 @@ function drawPlanet(size = 50, distance = 200, count, parentToken) {
     let shadowClipPath = newPlanetNShadow.querySelector('clipPath');
     shadowClipPath.setAttribute('id', `shadow_clip_path_${count}`);
     let clipPathCirc = shadowClipPath.querySelector('circle');
-    console.log(shadowClipPath);
     clipPathCirc.setAttribute('r', size);
     
     planetShadow.setAttribute('id', `${count}_shadow`);
@@ -155,16 +150,15 @@ function drawPlanet(size = 50, distance = 200, count, parentToken) {
     //M startPoint a rx,ry 0 1,0 1,0 z
     let path = `M 500,${500-distance} a ${distance},${distance} 0 1,0 1,0`;
     orbitPath.attributes['path'].value = path;
-    orbitPath.attributes['dur'].value = randomInt(18, 50);
-    // orbitPath.attributes['dur'].value = random(.3, 2);
-    orbitPath.attributes['begin'].value = "-3s";
+    let duration = randomInt(18, 60);
+    orbitPath.attributes['dur'].value = duration;
+    orbitPath.attributes['begin'].value = -duration/4;
     orbitPath.attributes['repeatCount'].value = "indefinite";
     orbitPath.setAttribute('distance', distance);
 
     parent.append(newPlanetNShadow);
-    return planetNShadow
-    // parent.appendChild(newPlanet);
-    // parent.appendChild(planetShadow);
+    //set up the interval to switch planet positions at apex of orbit
+    initilizeInterval(duration*500, newPlanetNShadow, count);
 }
 function refresh() {
     let group = document.querySelector('g');
@@ -174,6 +168,40 @@ function refresh() {
     draw();
 }
 
+function adjustPosition(element, position2, position1){
+    let elementID = element.getAttribute('id');
+    let physicalPos1 = document.getElementById(position1);
+    let physicalPos2 = document.getElementById(position2);
+    if(physicalPos1.querySelector(`#${elementID}`)){
+        element.remove();
+        physicalPos2.appendChild(element);
+    }
+    else{
+        element.remove();
+        physicalPos1.appendChild(element);
+    }
+}
+
+function initilizeInterval(interval, element, count){
+    let position1, position2;
+    if(count == 1){
+        position1 = 'position_4';
+        position2 = 'position_6';
+    }
+    if(count == 2){
+        position1 = 'position_3';
+        position2 = 'position_7';
+    }
+    if(count == 3){
+        position1 = 'position_2';
+        position2 = 'position_8';
+    }
+    if(count == 4){
+        position1 = 'position_1';
+        position2 = 'position_9';
+    }
+    setInterval(adjustPosition, interval, element, position1, position2);
+}
 let drawAndCleanup = draw();
 // drawAndCleanup.remove();
 

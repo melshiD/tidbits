@@ -88,26 +88,42 @@
                 <feComposite operator="in" in="SourceGraphic" />
             </filter>
         </defs>
+        <rect width="1000" height="500" stroke="pink" fill="none"/>
         <g id="stars_and_planets">
             <circle class="star" id="star" cy="500" cx="500" r="50" filter="url(#saturn)" fill="#990000"></circle>
-            <g id="planet_g_template" >
+            <g id="planet_g_template">
                 <animateMotion 
-                    dur="13" 
-                    begin="-3"
+                    dur="3" 
+                    begin="-.75"
                     repeatCount="indefinite"
-                    path="M 500,200 a 300,300 0 1,0 1,0 0">
+                    path="M 500,200 a 300,300 0 1,0 1,0 0"
+                    class="4"
+                >
+
                 </animateMotion>
                 <clipPath id="shadow_clip_path" >
                     <circle  r="18"></circle>
                 </clipPath>
                 <!-- <g clip-path="url(#shadow_clip_path)"> -->
-                <circle class="planet" r="18" fill="red"></circle>
+                <circle class="planet" r="18" fill="red" pos="4">
+                </circle>
                 <circle class="shadow" cx="50" cy="40" r="118" fill="url(#rad_grad_template)" clip-path="url(#shadow_clip_path)"></circle>
             </g>
         </g>    
     </svg>
+    <script>
+        svgNs="http://www.w3.org/2000/svg";
+        let circ = document.querySelector('.planet');
+        const toggleColor = (value1, value2) => {
+            // circ.setAttributeNS(svgNs, 'fill', value1?value2:value1);
+            let currentValue = circ.attributes.fill.value;
+            let newValue = currentValue == value1 ? value2 : value1;
+            circ.attributes.fill.value = newValue;
+            console.log(value1?value2:value1)
+            console.log('working');
+            console.log(value1);
+        }
+        const intervalId = setInterval(toggleColor, 1500, 'red', 'pink');
+    </script>
 </body>
 </html>
-
-<!-- WHEN YOU RETURN TO THIS, FIX THE OUTPUT MARKUP YIELDING THE PLANET_4 IN THE 
-TOP CORNER and the faulty shadows -->
