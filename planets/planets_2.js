@@ -67,12 +67,36 @@ function drawStar(size) {
     const lightness = randomInt(60, 80);
     const color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 
-    let star = document.getElementById('star');
-    star.style.fill = color;
-    star.setAttribute('cx', width / 2);
-    star.setAttribute('cy', height / 2);
-    star.setAttribute('r', size / 2);
+    let star = document.querySelector('.star');
+    let starBlur = star.querySelector('#glow');
+    starBlur.style.fill = color;
+    starBlur.setAttribute('cx', width / 2);
+    starBlur.setAttribute('cy', height / 2);
+    starBlur.setAttribute('r', size / 2);
+    starBlur.setAttribute('filter', 'url(#blur)');
+ 
+    //WHEN YOU SIT BACK DOWN, INCLUDE THE FILTERS IN THE CIRCLES
+
+    let starMainFilter = document.getElementById('star_main');
+    starMainFilter.querySelector('feTurbulence').attributes.baseFrequency.value = size/5000;
+    starMainFilter.querySelector('feTurbulence').attributes.seed.value = random(0, 100);
+
+    let starColorSaturatedAndLight = `hsl(${hue}, 100%, 60%)`;
+    let lightColor = starMainFilter.querySelector('feDiffuseLighting');
+    lightColor.setAttribute('lighting-color', `${starColorSaturatedAndLight}`);
+    lightColor.setAttribute('surfaceScale', size/20);
+
+    starMainFilter.querySelector('feGaussianBlur').attributes.stdDeviation.value = size/100;
+
+    let turbGlow = star.querySelector('#turb_glow');
+    turbGlow.style.fill = color;
+    turbGlow.setAttribute('cx', width / 2);
+    turbGlow.setAttribute('cy', height / 2);
+    turbGlow.setAttribute('r', size / 2);
+    turbGlow.setAttribute('filter', 'url(#star_main)');
     // star.setAttribute('filter', 'url(#saturn)');
+
+
 }
 
 function drawPlanet(size = 50, distance = 200, count, parentToken) {

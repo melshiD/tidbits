@@ -70,7 +70,41 @@
                 <stop offset="0%" stop-color="hsla(0, 0%, 0%, 0)"></stop>
                 <stop offset="90%" stop-color="hsla(0, 0%, 0%, 1)"></stop>
             </radialGradient>
+            <filter id="blur">
+                <feGaussianBlur stdDeviation="6">
+            </filter>
 
+            <!-- star Filters  -->
+            <filter id="star_main">
+                <feTurbulence type="fractalNoise" baseFrequency="" numOctaves="5" seed="" />
+                <feDiffuseLighting lighting-color="" surfaceScale="">
+                    <feDistantLight azimuth="45" elevation="60" />
+                </feDiffuseLighting>
+                <feComposite operator="in" in2="SourceGraphic" />
+                <feGaussianBlur stdDeviation="" />
+            </filter>
+            
+            <filter id="star_glow" filterUnits="userSpaceOnUse" x="0" y="0" height="16" width="16">
+                <feGaussianBlur stdDeviation="2" />
+            </filter>
+            
+            <!-- <filter id="star-secondary-glow" filterUnits="userSpaceOnUse" x="${width/2 - size * blurFilterSize}"
+                y="${height/2 - size * blurFilterSize}" height="${size * 2 * blurFilterSize}" width="${size * 2 * blurFilterSize}">
+                <feGaussianBlur stdDeviation="${size / 5}" />
+            </filter>
+            
+            <filter id="star-turbulent-glow">
+                <feTurbulence baseFrequency="${0.75 / size * 10}" seed="${random(0, 100)}" />
+                <feDiffuseLighting lighting-color="${starColorSaturatedAndLight}" surfaceScale="${1 * size / 20}">
+                    <feDistantLight azimuth="45" elevation="60" />
+                </feDiffuseLighting>
+                <feComposite operator="in" in2="SourceGraphic" />
+                <feGaussianBlur stdDeviation="${size / 30}" />
+            </filter> -->
+
+            
+
+            <!-- other filters  -->
             <filter id="my-filter">
                 <feTurbulence baseFrequency="0.1" numOctaves="1" seed="0"/>
                 <feDiffuseLighting lighting-color="DodgerBlue" surfaceScale="10">
@@ -93,8 +127,12 @@
             <g id="position_2"></g>
             <g id="position_3"></g>
             <g id="position_4"></g>
-            <g id="position_5">
-                <circle class="star" id="star"></circle>
+            <g id="position_5" class="star">
+                <circle id="glow"></circle>
+                <circle id="turb_glow"></circle>
+                <!-- <circle ></circle>
+                <circle ></circle>
+                <circle ></circle> -->
             </g>
             <g id="position_6"></g>
             <g id="position_7"></g>
@@ -121,6 +159,3 @@
     <script src="planets_2.js"></script>
 </body>
 </html>
-
-<!-- WHEN YOU RETURN TO THIS, FIX THE OUTPUT MARKUP YIELDING THE PLANET_4 IN THE 
-TOP CORNER and the faulty shadows -->

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hover Effect</title>
+    <style>
+        .image {
+            width: 40%;
+            margin: 0;
+            padding: 0;
+            transform: translateY(5px) scale(0.9, 0.9);
+            transition: transform 0.2s ease-in;
+        }
+
+        .image__foreground {
+            transform-origin: 50% 20%;
+            transform: scale(1, 1);
+            transition: transform 0.2s ease-in;
+        }
+
+        .image:hover {
+            transform: scale(1, 1);
+        }
+
+        .image:hover .image__foreground {
+            transform:  scale(1.15, 1.15);
+        }
+
+        /* Optional styles (decoration) */
+
+        body {
+            background-color: black;
+            padding: 2em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* max-width: 300px; */
+            /* Change this to any px value */
+            /* margin: 0 auto; */
+            min-height: calc(100vh - 100px);
+        }
+
+        html {
+            box-sizing: border-box;
+        }
+
+        *,
+        *:before,
+        *:after {
+            box-sizing: inherit;
+        }
+        .zoom-card{
+            width: 1000px;
+            /* height: 200px; */
+            /* width: 300px;
+            height: 500px; */
+            display: flex;
+            align-items: center;
+            /* flex-direction: column; */
+            justify-content: flex-end;
+            border: purple 2px solid;
+            border-radius: 2rem;
+            margin: 7px;
+            padding-bottom: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="zoom-card">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -10 100 120" width="213" class="image">
+            <title>This is an image title</title>
+            <desc>This is an image description</desc>
+            <defs>
+                <clipPath id="maskImage" clipPathUnits="userSpaceOnUse">
+                    <path d="M100 63A50 50 0 110 70C0 42 20 0 48 0c27 0 52 42 52 70z" />
+                </clipPath>
+                <clipPath id="maskBackground" clipPathUnits="userSpaceOnUse">
+                    <path d="M190 101a50 50 0 01-50 50 50 50 0 01-50-50 50 50 0 0150-50 50 50 0 0150 50z" />
+                </clipPath>
+            </defs>
+            <!-- Background image -->
+            <g clip-path="url(#maskImage)" transform="translate(0 -7)">
+                <!-- <image clip-path="url(#maskBackground)" width="120" height="120" x="70" y="38"
+                    href="https://res.cloudinary.com/dazdt97d3/image/upload/v1615813805/background.png"
+                    transform="translate(-90 -31)" /> -->
+                <image 
+                    id="background"
+                    clip-path="url(#maskBackground)" width="120" height="120" x="70" y="28"
+                    href="images/iu.jpg"
+                    transform="translate(-90 -31)" />
+                <!-- Foreground image -->
+                <image width="110" height="120" x="-7" y="6" fill="none" class="image__foreground"
+                    href="images/shoddy_no_background.png" />
+                <!-- <image width="120" height="144" x="-15" y="0" fill="none" class="image__foreground"
+                    href="https://res.cloudinary.com/dazdt97d3/image/upload/v1615813805/foreground.png" /> -->
+            </g>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -10 100 120" width="213" class="image">
+            <title>This is an image title</title>
+            <desc>This is an image description</desc>
+            <defs>
+                <clipPath id="maskImage" clipPathUnits="userSpaceOnUse">
+                    <path d="M100 63A50 50 0 110 70C0 42 20 0 48 0c27 0 52 42 52 70z" />
+                </clipPath>
+                <clipPath id="maskBackground" clipPathUnits="userSpaceOnUse">
+                    <path d="M190 101a50 50 0 01-50 50 50 50 0 01-50-50 50 50 0 0150-50 50 50 0 0150 50z" />
+                </clipPath>
+            </defs>
+            <!-- Background image -->
+            <g clip-path="url(#maskImage)" transform="translate(0 -7)">
+                <!-- <image clip-path="url(#maskBackground)" width="120" height="120" x="70" y="38"
+                    href="https://res.cloudinary.com/dazdt97d3/image/upload/v1615813805/background.png"
+                    transform="translate(-90 -31)" /> -->
+                <image 
+                    id="background"
+                    clip-path="url(#maskBackground)" width="120" height="120" x="70" y="28"
+                    href="images/iu.jpg"
+                    transform="translate(-90 -31)" />
+                <!-- Foreground image -->
+                <image width="110" height="120" x="-7" y="6" fill="none" class="image__foreground"
+                    href="images/shoddy_no_background.png" />
+                <!-- <image width="120" height="144" x="-15" y="0" fill="none" class="image__foreground"
+                    href="https://res.cloudinary.com/dazdt97d3/image/upload/v1615813805/foreground.png" /> -->
+            </g>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -10 100 120" width="213" class="image">
+            <title>This is an image title</title>
+            <desc>This is an image description</desc>
+            <defs>
+                <clipPath id="maskImage" clipPathUnits="userSpaceOnUse">
+                    <path d="M100 63A50 50 0 110 70C0 42 20 0 48 0c27 0 52 42 52 70z" />
+                </clipPath>
+                <clipPath id="maskBackground" clipPathUnits="userSpaceOnUse">
+                    <path d="M190 101a50 50 0 01-50 50 50 50 0 01-50-50 50 50 0 0150-50 50 50 0 0150 50z" />
+                </clipPath>
+            </defs>
+            <!-- Background image -->
+            <g clip-path="url(#maskImage)" transform="translate(0 -7)">
+                <!-- <image clip-path="url(#maskBackground)" width="120" height="120" x="70" y="38"
+                    href="https://res.cloudinary.com/dazdt97d3/image/upload/v1615813805/background.png"
+                    transform="translate(-90 -31)" /> -->
+                <image 
+                    id="background"
+                    clip-path="url(#maskBackground)" width="120" height="120" x="70" y="28"
+                    href="images/iu.jpg"
+                    transform="translate(-90 -31)" />
+                <!-- Foreground image -->
+                <image width="110" height="120" x="-7" y="6" fill="none" class="image__foreground"
+                    href="images/shoddy_no_background.png" />
+                <!-- <image width="120" height="144" x="-15" y="0" fill="none" class="image__foreground"
+                    href="https://res.cloudinary.com/dazdt97d3/image/upload/v1615813805/foreground.png" /> -->
+            </g>
+        </svg>
+    </div>
+
+</body>
+
+</html>
