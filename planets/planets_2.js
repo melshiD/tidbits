@@ -18,31 +18,34 @@ function randFromArray(array) {
 
 //draw a satellite object and append it to the group
 const svgNs = "http://www.w3.org/2000/svg";
-const width = 1000;
-const height = 1000;
+const width = 1700;
+const height = 1700;
+
+document.querySelector('svg').setAttribute('viewBox', `0 0 ${width} ${height}`);
 
 const listenerFunc = (ev) => {
     let orbits = document.querySelectorAll('animateMotion');
     [...orbits].forEach(orbit => {
         let distance = orbit.getAttribute('distance');
         let newDist = distance / ev.target.value;
-        let path = `M 500,${500-newDist} a ${distance},${newDist} 0 1,0 1,0`;
+        let path = `M ${width/2},${height/2-newDist} a ${distance},${newDist} 0 1,0 1,0`;
         orbit.setAttribute('path', path);
     });
 };
 
 function draw() {
-    let starSize = randomInt(70, 130);
+    let starSize = randomInt(170, 230);
     drawStar(starSize);
 
     const randPlanetSize = () => randomInt(7, 38);
     const randOrbitDistance = () => randomInt(90, 130);
 
     let size = randPlanetSize();
-    let distance = randOrbitDistance();
+    let distance = randOrbitDistance() + starSize/2;
     let count = 1;
 
-    while (distance + size <= width / 2) {
+    // while (distance + size <= width / 2) {
+    while (distance + size <= width / 2 && count < 5) {
         drawPlanet(size, distance, count, '#stars_and_planets');
 
         size = randPlanetSize();
@@ -172,7 +175,7 @@ function drawPlanet(size = 50, distance = 200, count, parentToken) {
 
     let orbitPath = newPlanetNShadow.querySelector('animateMotion');
     //M startPoint a rx,ry 0 1,0 1,0 z
-    let path = `M 500,${500-distance} a ${distance},${distance} 0 1,0 1,0`;
+    let path = `M ${width/2},${height/2-distance} a ${distance},${distance} 0 1,0 1,0`;
     orbitPath.attributes['path'].value = path;
     let duration = randomInt(18, 60);
     orbitPath.attributes['dur'].value = duration;
