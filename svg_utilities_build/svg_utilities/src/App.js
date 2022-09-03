@@ -1,8 +1,20 @@
-import logo from './logo.svg';
+import {useState, useRef, useEffect} from "react";
 import './App.css';
 
 function App() {
-  
+  const [baseFrequencyX, setBaseFrequencyX] = useState('0.1');
+  const [baseFrequencyY, setBaseFrequencyY] = useState('0.1');
+
+  const baseFreqXRef = useRef(null);
+
+  // useEffect(() => {
+  //   setBaseFrequencyX(baseFreqXRef.current.value);
+  // }, [baseFreqXRef.current.value]);
+
+  const baseFreqXChangeHandler = (value) =>{
+    setBaseFrequencyX(value);
+  }
+
   return (
     <div className="App">
       <svg
@@ -18,7 +30,7 @@ function App() {
 
         <defs>
           <filter id="my-filter">
-            <feTurbulence baseFrequency="0.1" seed="0" numOctaves="1" />
+            <feTurbulence baseFrequency={`${baseFrequencyX} 0.1`} seed="0" numOctaves="1" />
             <feComposite operator="in" in="SourceGraphic" />
           </filter>
         </defs>
@@ -31,8 +43,8 @@ function App() {
           <legend>Base Frequency</legend>
           <div>
             <label for="baseFrequencyX">x</label>
-            <input type="range" name="baseFrequencyX" id="baseFrequencyX" value="0.1" min="0.01" max="2" step="0.01"/>
-              <span aria-hidden="true" id="baseFrequencyXDisplay">0.01</span>
+            <input ref={baseFreqXRef} onChange={(e) => baseFreqXChangeHandler(e.target.value)} type="range" name="baseFrequencyX" id="baseFrequencyX" value={baseFrequencyX} min="0.01" max="2" step="0.01"/>
+              <span aria-hidden="true" id="baseFrequencyXDisplay">{baseFrequencyX}</span>
           </div>
           <div>
             <label for="baseFrequencyY">y</label>
