@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circle Dot Constraint</title>
+    <style>
+        svg{
+            height: 100vh;
+            padding: 2rem;
+            box-sizing: border-box;
+
+        }
+    </style>
+</head>
+<body>
+    <svg id="svg" viewBox="0 0 4000 5000">
+        <defs>
+            <symbol id="form_group_1">
+                <rect width="1000" height="1000" fill="pink"></rect>
+                <g class="outer">
+                    <circle class="outermost-outer" cx="50" cy="50" r="35" fill="black"></circle>
+                    <!-- this one gets transformed 90 deg at a time  -->
+                </g>
+                <g class="inner">
+                    <circle class="outermost" cx="250" cy="250" r="220" fill="black"></circle>
+                    <circle class="first-inner" cx="250" cy="250" r="150" fill="white"></circle>
+                    <circle class="first-inner-small" cx="250" cy="110" r="35" fill="white"></circle>
+                </g>
+            </symbol>
+        </defs>
+        <g id="visible_group">
+            <use id="visible_form_1" href="#form_group_1" x="0" y="0"></use>
+        </g>        
+    </svg>
+    <script>
+        let svg = document.getElementById('svg');
+        let defs = document.querySelector('defs');
+
+        let count = 20;
+        let x = 0;
+        let y = 0;
+
+        function buildNewVisibleForm(count, x, y){
+            let newVisibleForm = document.getElementById('visible_form_1').cloneNode(true);
+            newVisibleForm.setAttribute('id', `visible_form_${count}`);
+            newVisibleForm.setAttribute('x', x);
+            newVisibleForm.setAttribute('y', y);
+            newVisibleForm.setAttribute('href', `#form_group_${count}`);
+            return newVisibleForm;
+        }
+
+        function buildNewFormSymbol(count){
+            let newFormSymbol = document.getElementById('form_group_1').cloneNode(true);
+            newFormSymbol.setAttribute('id', `form_group_${count}`);
+            newFormSymbol.setAttribute('fill', `hsl(10, 100%, 88%)`);
+            let outer = newFormSymbol.querySelector('.outer');
+            outer.setAttribute('transform', `rotate(${(90*count)%360}, 500, 500)`);
+            let inner = newFormSymbol.querySelector('.inner');
+            inner.setAttribute('transform', `rotate(${(45*count)%360}, 250, 250)`)
+            // WHEN YOU SIT BACK DOWN, FILL THE RECT AND NOT THE G TAG 
+
+            outer.setAttribute('fill', `hsl(${(90*count)%360}, 100%, 88%)`);
+            defs.appendChild(newFormSymbol);
+            return newFormSymbol;
+        }
+
+        while(count > 0){
+            let newVisibleForm = buildNewVisibleForm(count, x, y);
+            let newFormSymbol = buildNewFormSymbol(count);
+            console.log('inthe loop');
+
+            if(y < 4000){
+                y += 1000
+            }
+            else{
+                y = 0;
+                x += 1000;
+            }
+
+            defs.appendChild(newFormSymbol);
+            svg.appendChild(newVisibleForm);
+
+            count --;
+        }
+    </script>
+</body>
+</html>
