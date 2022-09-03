@@ -22,7 +22,7 @@
   xmlns="http://www.w3.org/2000/svg"
   xmlns:xlink="http://www.w3.org/1999/xlink"
 
-  viewBox="0 0 1500 500"
+  viewBox="0 0 1500 1000"
   role="img"
   aria-labelledby="title"
 >
@@ -76,12 +76,18 @@
       </feDiffuseLighting>
       <feComposite operator="in" in2="SourceGraphic"></feComposite>
     </filter>
+    <filter id="blur">
+      <feGaussianBlur stDeviation="5"></feGaussianBlur>
+  </filter>
   </defs>
   
   <!-- <circle cx="50" cy="50" r="50" filter="url('#my_filter')" /> -->
+<g filter="url('#blur')">
   <rect rx="80" width="500" height="500" filter="url('#my_filter')"/>
   <rect rx="80" x="500" width="500" height="500" filter="url('#my_filter_2')"/>
   <rect rx="80" x="1000" width="500" height="500" filter="url('#my_filter_3')"/>
+  <rect rx="80" y="500" width="500" height="500" filter="url('#blur')"/>
+</g>
 </svg>
 </div>
 <script>

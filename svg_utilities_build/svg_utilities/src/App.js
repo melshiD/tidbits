@@ -1,5 +1,7 @@
 import {useState, useRef, useEffect} from "react";
 import './App.css';
+import Filter from "./components/Filter";
+import FeTurbulence from "./components/FeTurbulence";
 
 function App() {
   const [baseFrequencyX, setBaseFrequencyX] = useState('0.1');
@@ -7,17 +9,14 @@ function App() {
 
   const baseFreqXRef = useRef(null);
 
-  // useEffect(() => {
-  //   setBaseFrequencyX(baseFreqXRef.current.value);
-  // }, [baseFreqXRef.current.value]);
-
   const baseFreqXChangeHandler = (value) =>{
     setBaseFrequencyX(value);
   }
 
   return (
     <div className="App">
-      <svg
+      <svg 
+      filter="url('#blur')"
         width="200"
         height="200"
         viewBox="0 0 100 100"
@@ -30,9 +29,12 @@ function App() {
 
         <defs>
           <filter id="my-filter">
-            <feTurbulence baseFrequency={`${baseFrequencyX} 0.1`} seed="0" numOctaves="1" />
+            <FeTurbulence options={{baseFrequencyX: baseFrequencyX, baseFrequencyY: '0.1', seed: '0', numOctaves: '1'}} />
             <feComposite operator="in" in="SourceGraphic" />
           </filter>
+          <filter id="blur">
+        <feGaussianBlur stDeviation="5"></feGaussianBlur>
+    </filter>
         </defs>
 
         <circle cx="50" cy="50" r="50" filter="url('#my-filter')" />
