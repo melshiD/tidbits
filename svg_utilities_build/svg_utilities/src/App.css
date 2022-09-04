@@ -1,7 +1,15 @@
 .App {
   text-align: center;
-  display: flex;
+  display: grid;
+  grid-template-columns: 4fr 1fr;
   justify-content: center;
   align-items: center;
   height: 700px;
+}
+form{
+  align-self: flex-end;
+  margin-right: 1rem;
+}
+svg{
+  margin: auto;
 }
