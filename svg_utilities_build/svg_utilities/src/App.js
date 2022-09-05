@@ -1,8 +1,9 @@
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import './App.css';
 import Filter from "./components/Filter";
 import FeTurbulence from "./components/FeTurbulence";
 import Svg from "./components/Svg";
+import Layout from "./components/Layout/Layout";
 
 function App() {
   const [baseFrequencyX, setBaseFrequencyX] = useState('0.1');
@@ -16,7 +17,9 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <React.Fragment>
+      <Layout>
+      <div className="App">
       <Svg className="svg-image" viewBox="0 0 200 200">
         <title id="title">
           A Turbulent World
@@ -81,6 +84,8 @@ function App() {
       </div>
 
     </div>
+      </Layout>
+    </React.Fragment>
   );
 }
 
