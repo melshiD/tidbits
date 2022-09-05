@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import './App.css';
 import Filter from "./components/Filter";
 import FeTurbulence from "./components/FeTurbulence";
+import Svg from "./components/Svg";
 
 function App() {
   const [baseFrequencyX, setBaseFrequencyX] = useState('0.1');
@@ -16,20 +17,13 @@ function App() {
 
   return (
     <div className="App">
-      <svg
-        // filter="url('#blur')"
-        width="200"
-        height="200"
-        viewBox="0 0 100 100"
-        role="img"
-        aria-labelledby="title"
-      >
+      <Svg className="svg-image" viewBox="0 0 200 200">
         <title id="title">
           A Turbulent World
         </title>
 
         <defs>
-          <Filter id="my-filter">
+          <Filter id="my_filter">
             <FeTurbulence options={{
               baseFrequencyX,
               baseFrequencyY,
@@ -44,8 +38,8 @@ function App() {
           </filter>
         </defs>
 
-        <circle cx="50" cy="50" r="50" filter="url('#my-filter')" />
-      </svg>
+        <circle cx="100" cy="50" r="150" filter="url('#my_filter')" />
+      </Svg>
       <div className="filter-div">
         {/* WHEN YOU SIT BACK DOWN, FIGURE OUT HOW TO DESIGN THE FILTER INTERFACE  */}
         <form>

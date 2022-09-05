@@ -12,4 +12,10 @@ form{
 }
 svg{
   margin: auto;
+  width: 50%;
+  height: 50%;
+  border: black solid 2px;
+}
+.svg-image{
+
 }
