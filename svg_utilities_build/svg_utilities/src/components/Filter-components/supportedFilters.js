@@ -1,4 +1,4 @@
-import FeTurbulence from "../FeTurbulence";
+import FeTurbulence from "./FeTurbulence";
 
 const supportedFilters = () => { 
     return( [

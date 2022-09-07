@@ -5,9 +5,9 @@ const SideFilterExample = (props) => {
 
     return (
         <React.Fragment>
-            <h1>
+            <p>
                 {tokenName}
-            </h1>
+            </p>
             <svg>
                 <filter id="my_filter_2">
                     <feTurbulence baseFrequency="0.88 .95" seed="0" numOctaves="3">

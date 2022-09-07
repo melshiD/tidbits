@@ -67,8 +67,10 @@
   font-weight: bold;
   background-color: whitesmoke;
 }
-.side-filter-example-container{
+.hovering-filter-form{
   position: absolute;
+  top: 10px;
+  left:20px;
 }
 
 /*# sourceMappingURL=Dropdown.css.map */
