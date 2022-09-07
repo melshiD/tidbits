@@ -15,10 +15,12 @@ function App() {
   const baseFreqChangeHandler = (value, freqComponent) => {
     freqComponent == 'y' ? setBaseFrequencyY(value) : setBaseFrequencyX(value);
   }
-
   return (
     <React.Fragment>
       <Layout>
+
+        {/* WYSBD: BUILD FILTER SETTINGS FORM MODAL AND ADD PRIMATIVE TO FILTER  */}
+      
       <div className="App">
       <Svg className="svg-image" viewBox="0 0 200 200">
         <title id="title">

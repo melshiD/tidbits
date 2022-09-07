@@ -1,6 +1,7 @@
 import React from 'react';
 import classes from './TopNav.module.css';
-
+import Dropdown from './Dropdown';
+import supportedFilters from '../resources/supportedFilters';
 
 const TopNav = () => {
     const dropdownButtonHandler = (e) => {
@@ -23,28 +24,10 @@ const TopNav = () => {
                         <circle cx="150" cy="60" r="200" fill="red" stroke="blue" />
                     </svg>
                 </div>
-                <div className={classes['dropdown']} data-dropdown>
-                    <button className={classes['link']} data-dropdown-button onClick={dropdownButtonHandler}>
-                        Add Filter
-                    </button>
-                    <div className={classes["dropdown-menu, information-grid"]}>
-                        <div>
-                            <div className={classes["dropdown-heading"]}>Add Filter</div>
-                            <div className={classes["dropdown-links"]}>
-                                <a href="">feTurbulence</a>
-                                <a href="">feTurbulence</a>
-                                <a href="">feTurbulence</a>
-                            </div>
-                        </div>
-                    </div>
+                <Dropdown multiSelect title="Add a Filter" items={supportedFilters()}/>
+                <Dropdown title="Add a Shape"/>
+                <Dropdown title="Add a Gradient"/>
 
-                    <button className={classes['nav-button']}>
-                        Add Primitive
-                    </button>
-                    <button className={classes['nav-button']}>
-                        Add Element
-                    </button>
-                </div>
 
             </div>
         </React.Fragment>
