@@ -1,58 +1,14 @@
+import Dropdown from "../Layout/Dropdown";
 import React, { useEffect, useState, useRef } from 'react';
-import './Dropdown.css';
-import FilterDemoForm from '../Filter-components/FilterDemoForm';
-import classes from '../Layout/Dropdown.css';
+import '../Layout/Dropdown.css';
+import FilterDemoForm from './FilterDemoForm';
 
-const DUMMY_DATA = [
-    {
-        id: 1,
-        value: "feTurbulence"
-    },
-    {
-        id: 2,
-        value: 'feDiffuseLight'
-    },
-    {
-        id: 3,
-        value: 'Monster Bacon'
-    },
-    {
-        id: 4,
-        value: 'Vader in Paris'
-    },
-    {
-        id: 5,
-        value: "Pulp Fiction"
-    },
-    {
-        id: 6,
-        value: 'Once upon a time in Hollywood'
-    },
-    {
-        id: 7,
-        value: 'Monster Bacon'
-    },
-    {
-        id: 8,
-        value: 'Vader in Paris'
-    },
-    {
-        id: 9,
-        value: 'Once upon a time in Hollywood'
-    },
-    {
-        id: 10,
-        value: 'Monster Bacon'
-    },
-    {
-        id: 11,
-        value: 'Vader in Paris'
-    }
-];
 
-const Dropdown = ({title, items = DUMMY_DATA, 
-                   multiSelect=false, 
-                   displayFilterForm=false,
+//needs refactored with Dropdown, but this one manages some state the others dont
+
+const FilterDropdown = ({title, items, 
+                        multiSelect=false, 
+                        displayFilterForm=false,
                  }) => {
     const [open, setOpen] = useState(false);
     const [selection, setSelection] = useState([]);
@@ -127,7 +83,7 @@ const Dropdown = ({title, items = DUMMY_DATA,
                                     <span>{item.value}</span>
                                 </button>
                                 {item.value === selection[0]?.value &&
-                                 <FilterDemoForm filterToken={selection[0].value}/>
+                                 <FilterDemoForm filterType={selection[0]?.value}/>
                                 }
                             </li>
                         ))}
@@ -138,5 +94,4 @@ const Dropdown = ({title, items = DUMMY_DATA,
     );
 };
 
-export default Dropdown;
-// export default onClickOutside(Dropdown, clickOutsideConfig);
+export default FilterDropdown;

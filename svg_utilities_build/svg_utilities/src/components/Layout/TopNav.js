@@ -3,6 +3,7 @@ import classes from './TopNav.module.css';
 import Dropdown from './Dropdown';
 import supportedFilters from '../Filter-components/supportedFilters';
 import FilterContext from '../../Store/filter-context';
+import FilterDropdown from '../Filter-components/FilterDropdown';
 
 
 const TopNav = () => {
@@ -17,11 +18,9 @@ const TopNav = () => {
                         <circle cx="150" cy="60" r="200" fill="red" stroke="blue" />
                     </svg>
                 </div>
-                <Dropdown title="Add a Filter" items={supportedFilters()}/>
+                <FilterDropdown title="Add a Filter" displayFilterForm hoveringFilterToken={hfCtx.hoveringFilterToken} items={supportedFilters()}></FilterDropdown>
                 <Dropdown title="Add a Shape" displayFilterForm hoveringFilterToken={hfCtx.hoveringFilterToken}/>
                 <Dropdown title="Add a Gradient"/>
-        {/* WYSBD: BUILD PURPOSE-MADE DROPDOWN COMPONENTS THAT EXTEND THESE DROPDOWN COMPONENTS  */}
-
             </div>
         </React.Fragment>
     );

@@ -1,7 +1,7 @@
 import React from "react";
 
 const FilterContext = React.createContext({
-    hoveringFilterToken: null
+    hoveringFilterToken: false
 });
 
 export default FilterContext;
