@@ -3,12 +3,10 @@ import classes from "./FilterDemoForm.module.css";
 import BaseFrequencyFS from './Form-field-sets/BaseFrequencyFS';
 import TurbulenceTypeFS from './Form-field-sets/TurbulenceTypeFS';
 import FormExampleCircleDisplay from './FormExampleCircleDisplay.js';
+import FormFilterInstances from './FormFilterInstances';
 import FeTurbulence from "./FeTurbulence";
 import Filter from "./Filter";
 import {FilterDropdownFormSettingsContext} from '../../Store/filter-context.js';
-
-//WYSBD: USE THE CONTEXT TO WIRE UP ALL THE FILTER FORMS TO THE FILTER 
-//TAG/DECLARATION AND THAT -> TO THE CIRCLE
 
 const FilterDemoForm = (props) => {
   const filterTypeName = props.filterType;
@@ -22,18 +20,21 @@ const FilterDemoForm = (props) => {
     setBaseFreqY(currentRefVal);
   };
   return (
-    // <FilterDropdownFormSettingsContext.Provider value={{settings: filterSettings, changeSettings: updateValuesHandler}}>
     <React.Fragment>
       <div className={classes['form-container']}>
-        <FormExampleCircleDisplay>
-                <FeTurbulence options={{
+        <FormExampleCircleDisplay filterType={props.filterType}>
+          <FormFilterInstances filterType={filterTypeName} 
+                               options={
+                                  //send bespoke packets as the state and assume the correct type will be using it?
+                               } />
+                {/* <FeTurbulence options={{
                   baseFrequencyX: baseFreqX,
                   baseFrequencyY: baseFreqY,
                   seed: '0',
                   numOctaves: '1'
                   }} 
                 />
-                <feComposite operator="in" in="SourceGraphic" />
+                <feComposite operator="in" in="SourceGraphic" /> */}
         </FormExampleCircleDisplay>
         <form className={classes.form}>
           {filterTypeName === "feTurbulence" && 

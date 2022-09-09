@@ -12,21 +12,53 @@
             box-sizing: border-box;
 
         }
+        img{
+            width: 500px;
+            filter: url('#gothamish');
+        }
     </style>
 </head>
 <body>
-    <svg id="svg" viewBox="0 0 4000 5000">
+    <!-- <svg id="svg" viewBox="0 0 5000 6000"> -->
+    <svg id="svg" viewBox="0 0 5000 6000" >
         <defs>
+            <filter id="gothamish" color-interpolation-filters="sRGB">
+                <feComponentTransfer in="SourceGraphic" result="midtoneContrast">
+                    <feFuncR type="table" tableValues="0 0.05 0.1 0.2 0.3 0.5 0.7 0.8 0.9 0.95 1.0" />
+                </feComponentTransfer>
+                <feColorMatrix in="midtoneContrast" 
+                               result="redBWandblue" 
+                               type="matrix" 
+                               values="1 0 0 0 0
+                                       1 0 0 0 0
+                                       1 0 0 0 0.03
+                                       0 0 0 1 0" 
+                />
+                <feGaussianBlur in="redBWandblue" stdDeviation="1" result="blurMask" />
+                <feComposite operator="arithmetic" in="redBWandblue" in2="blurMask" k2="1.3" k3="-0.3" result="postsharp" />
+                <feComponentTransfer result="finalImage" in="postsharp">
+                    <feFuncB type="table" tableValues="0 0.047 0.118 0.251 0.318 0.392 0.42 0.439 0.475 0.561 0.58 0.627 0.671 0.733 0.847 0.925 1" />
+                </feComponentTransfer>
+            </filter>
             <symbol id="form_group_1">
-                <rect width="1000" height="1000" fill="pink"></rect>
+                <rect width="1000" height="1000" id="background_rect" fill=""></rect>
                 <g class="outer">
                     <circle class="outermost-outer" cx="50" cy="50" r="35" fill="black"></circle>
                     <!-- this one gets transformed 90 deg at a time  -->
                 </g>
-                <g class="inner">
+                <g class="inner" >
                     <circle class="outermost" cx="250" cy="250" r="220" fill="black"></circle>
-                    <circle class="first-inner" cx="250" cy="250" r="150" fill="white"></circle>
-                    <circle class="first-inner-small" cx="250" cy="110" r="35" fill="white"></circle>
+                    <circle class="first-inner" cx="250" cy="250" r="150" fill="white">
+                    </circle>
+                    <circle class="first-inner-small" cx="250" cy="110" r="35" fill="white">
+                    </circle>
+                    <animateTransform attributeName="transform"
+                                      attributeType="XML"
+                                      type="rotate"
+                                      from="0 250 250"
+                                      to="1080 250 250"
+                                      dur="20s"
+                    />
                 </g>
             </symbol>
         </defs>
@@ -34,6 +66,11 @@
             <use id="visible_form_1" href="#form_group_1" x="0" y="0"></use>
         </g>        
     </svg>
+    <div>
+        <img src="http://t3.gstatic.com/licensed-image?q=tbn:ANd9GcQxFSO5D8ezcqgjpIVakCjBIkgjQg4Ou3FPJo07AApvxZfjMqqacSXQs5jWaGNBxxOA" 
+             alt="image if indy for filter application"
+        >
+    </div>
     <script>
         let svg = document.getElementById('svg');
         let defs = document.querySelector('defs');
@@ -43,7 +80,9 @@
         let y = 0;
 
         function buildNewVisibleForm(count, x, y){
-            let newVisibleForm = document.getElementById('visible_form_1').cloneNode(true);
+            let visibleForm = document.getElementById('visible_form_1');
+            let newVisibleForm = visibleForm.cloneNode(true);
+            if(count == 1){visibleForm.parentElement.remove(visibleForm)}
             newVisibleForm.setAttribute('id', `visible_form_${count}`);
             newVisibleForm.setAttribute('x', x);
             newVisibleForm.setAttribute('y', y);
@@ -52,17 +91,21 @@
         }
 
         function buildNewFormSymbol(count){
-            let newFormSymbol = document.getElementById('form_group_1').cloneNode(true);
+            let formSymbol = document.getElementById('form_group_1');
+            let newFormSymbol = formSymbol.cloneNode(true);
+            if(count == 1){formSymbol.remove();}
             newFormSymbol.setAttribute('id', `form_group_${count}`);
             newFormSymbol.setAttribute('fill', `hsl(10, 100%, 88%)`);
             let outer = newFormSymbol.querySelector('.outer');
             outer.setAttribute('transform', `rotate(${(90*count)%360}, 500, 500)`);
             let inner = newFormSymbol.querySelector('.inner');
-            inner.setAttribute('transform', `rotate(${(45*count)%360}, 250, 250)`)
+            inner.setAttribute('transform', `rotate(${(45*count)%360}, 250, 250)`);
+            let rect = newFormSymbol.querySelector('#background_rect');
+            rect.setAttribute('id', `background_rect_${count}`);
+            rect.setAttribute('fill', `hsl(${((30*count)%90)+20}, ${25*count%100}%, ${50*count%100}%)`);
             // WHEN YOU SIT BACK DOWN, FILL THE RECT AND NOT THE G TAG 
 
-            outer.setAttribute('fill', `hsl(${(90*count)%360}, 100%, 88%)`);
-            defs.appendChild(newFormSymbol);
+            // defs.appendChild(newFormSymbol);
             return newFormSymbol;
         }
 
