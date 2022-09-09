@@ -18,7 +18,7 @@ const TopNav = () => {
                         <circle cx="150" cy="60" r="200" fill="red" stroke="blue" />
                     </svg>
                 </div>
-                <FilterDropdown title="Add a Filter" displayFilterForm hoveringFilterToken={hfCtx.hoveringFilterToken} items={supportedFilters()}></FilterDropdown>
+                <FilterDropdown title="Add a Filter Primitive" displayFilterForm hoveringFilterToken={hfCtx.hoveringFilterToken} items={supportedFilters()}></FilterDropdown>
                 <Dropdown title="Add a Shape" displayFilterForm hoveringFilterToken={hfCtx.hoveringFilterToken}/>
                 <Dropdown title="Add a Gradient"/>
             </div>

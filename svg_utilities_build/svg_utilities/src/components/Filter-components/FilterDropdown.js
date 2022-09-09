@@ -2,6 +2,8 @@ import Dropdown from "../Layout/Dropdown";
 import React, { useEffect, useState, useRef } from 'react';
 import '../Layout/Dropdown.css';
 import FilterDemoForm from './FilterDemoForm';
+import FilterContext from "../../Store/filter-context";
+import Filter from "./Filter";
 
 
 //needs refactored with Dropdown, but this one manages some state the others dont

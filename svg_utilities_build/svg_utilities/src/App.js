@@ -5,6 +5,7 @@ import FeTurbulence from "./components/Filter-components/FeTurbulence";
 import Svg from "./components/Svg";
 import Layout from "./components/Layout/Layout";
 import FilterContext from './Store/filter-context.js';
+import {FilterDropdownFormSettingsContext} from './Store/filter-context.js';
 
 function App() {
   const [baseFrequencyX, setBaseFrequencyX] = useState('0.1');
@@ -13,13 +14,23 @@ function App() {
   const baseFreqXRef = useRef(null);
   const baseFreqYRef = useRef(null);
 
+  //filter setting state context stuff
+  const [filterSettings, setFilterSettings] = useState({});
+  const updateValuesHandler = (newValues) => {
+    if(newValues === null || newValues === undefined) return;
+    console.log(`inDelta:${newValues.settings}`);
+    setFilterSettings(newValues);
+  };
+
   const baseFreqChangeHandler = (value, freqComponent) => {
     freqComponent == 'y' ? setBaseFrequencyY(value) : setBaseFrequencyX(value);
   }
   return (
     <FilterContext.Provider value={{
-      hoveringFilterToken: null
+      // hoveringFilterToken: null
   }}>
+        <FilterDropdownFormSettingsContext.Provider value={{settings: filterSettings, changeSettings: updateValuesHandler}}>
+
       <Layout>
         <div className="App">
           <Svg className="svg-image" viewBox="0 0 200 200">
@@ -86,6 +97,7 @@ function App() {
 
         </div>
       </Layout>
+      </FilterDropdownFormSettingsContext.Provider>
     </FilterContext.Provider>
   );
 }
