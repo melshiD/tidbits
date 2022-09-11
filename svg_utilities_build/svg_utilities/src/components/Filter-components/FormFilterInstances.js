@@ -7,10 +7,11 @@ import FeTurbulence from './FeTurbulence';
 const FormFilterInstances = (props) => {
 	const [filterSettings, setFilterSettings] = useState({});
 	const filterType = props.filterType;
+	const {baseFrequencyX: baseX, baseFrequencyY: baseY} = props.options;
 		return(
 			<React.Fragment>
 				{filterType === "feTurbulence" &&
-						<FeTurbulence options={{baseFrequencyX: 1, baseFrequencyY: 1}}>
+						<FeTurbulence options={{baseFrequencyX: baseX, baseFrequencyY: baseY, seed: 10}}>
 
 						</FeTurbulence>
 				}

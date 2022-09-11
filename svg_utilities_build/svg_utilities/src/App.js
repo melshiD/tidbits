@@ -29,7 +29,7 @@ function App() {
     <FilterContext.Provider value={{
       // hoveringFilterToken: null
   }}>
-        <FilterDropdownFormSettingsContext.Provider value={{settings: filterSettings, changeSettings: updateValuesHandler}}>
+        {/* <FilterDropdownFormSettingsContext.Provider value={{settings: filterSettings, changeSettings: updateValuesHandler}}> */}
 
       <Layout>
         <div className="App">
@@ -97,7 +97,7 @@ function App() {
 
         </div>
       </Layout>
-      </FilterDropdownFormSettingsContext.Provider>
+      {/* </FilterDropdownFormSettingsContext.Provider> */}
     </FilterContext.Provider>
   );
 }
