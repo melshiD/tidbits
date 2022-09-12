@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Jet Screamer Style Soundwave </title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.1/gsap.min.js"></script>
+</head>
+<style>
+	html, body{
+		background-color: blue;
+	}
+	body{
+		display: flex;
+		justify-content: space-between;
+	}	
+	img{
+		width: 20%;
+	}
+	svg{
+		width: 200px;
+	}
+</style>
+<body>
+	<img src="../Images/jet_screamer_soundwave.jpg" alt="" srcset="">
+	<svg viewBox="0 0 1000 1000">
+		<ellipse cx="500" cy="500" 
+						 rx="300" ry="75" 
+						 fill="none"stroke="#e0a65a" 
+						 stroke-width="14"
+		/>
+	</svg>
+	<button onclick="singing()"> 
+		Animate
+	</button>
+	<script>
+		let target = document.querySelector('ellipse');
+
+		const singing = () => {
+			gsap.to(target, {attr: {rx: 300, ry:150}, 
+											 duration: 3, 
+											 ease: "elastic",
+											 repeat: -1});
+			gsap.to(target, {attr: {cx: 300, cy:150}, 
+											 duration: 3, 
+											 ease: "elastic"});
+
+		}
+	</script>
+</body>
+</html>
