@@ -43,13 +43,14 @@
 <body>
 	<img src="../Images/jet_screamer_soundwave.jpg" alt="" srcset="">
 	<svg viewBox="0 0 5000 5000">
+		<!-- back-side of wave-rings need to render on this side of the main form, the rest after  -->
+		<path transform="translate(-1 6)" stroke="#4ea5e7" fill="none" stroke-width="24" d="M  3300 2150 A 20 100 0 1 1 3300 2850"/>
 		<ellipse cx="2500" cy="2500" 
 						 rx="1500" ry="75" 
 						 fill="none"stroke="#e0a65a" 
 						 stroke-width="20"
 		/>
-		<path transform="translate(0 4)" stroke="#4ea5e7" fill="none" d="M  2500 2150 A 20 100 0 0 0 2500 2850 z"/>
-		<path transform="translate(0 6)" fill="lime"   d="M  0 0 A 10 2 0 0 0 20 0 Z"/>
+		<path z-indes="10" transform="translate(0 4)" stroke="#4ea5e7" fill="none" stroke-width="24" d="M  3300 2150 A 20 100 0 0 0 3300 2850"/>
 	</svg>
 	<button onclick="singing()"> 
 		Animate
