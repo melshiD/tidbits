@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,66 +10,176 @@
 	<!-- Your code that needs compiling goes in a type="text/babel" `script` tag -->
 	<script type="text/babel" data-presets="react,stage-3">
 		const MainContent = () => {
-				return <div>Hello, React!</div>;
+			return <div>Hello, React!</div>;
 		};
 
 		ReactDOM.render(<MainContent />, document.getElementById("root"));
 	</script>
-	
+
 	<div id="root"></div>
-	
+
 	<!-- This is what supports JSX compilation (and other transformations) -->
 	<script src="https://unpkg.com/@babel/standalone@7.10.3/babel.min.js"></script>
-	
+
 	<!-- These are for React -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.2/umd/react.development.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.2/umd/react-dom.development.js"></script>
-	
+
 </head>
 <style>
-	html, body{
-		background-color: blue;
+	* {
+		--orange: #e0a65a;
+		--arch-blue: #4ea5e7;
+		--background-blue: #121727;
+
 	}
-	body{
+
+	html,
+	body {
+		background-color: #121727;
+	}
+
+	body {
 		display: flex;
 		justify-content: space-between;
-	}	
-	img{
+	}
+
+	img {
 		width: 20%;
 	}
-	svg{
+
+	svg {
 		width: 1200px;
 	}
+
+	#follow {
+		fill: none;
+		stroke: grey;
+		stroke-width: 2;
+	}
+
+	#squiggle {
+		fill: none;
+		stroke: red;
+		stroke-width: 2;
+	}
 </style>
+
 <body>
 	<img src="../Images/jet_screamer_soundwave.jpg" alt="" srcset="">
 	<svg viewBox="0 0 5000 5000">
 		<!-- back-side of wave-rings need to render on this side of the main form, the rest after  -->
-		<path transform="translate(-1 6)" stroke="#4ea5e7" fill="none" stroke-width="24" d="M  3300 2150 A 20 100 0 1 1 3300 2850"/>
-		<ellipse cx="2500" cy="2500" 
-						 rx="1500" ry="75" 
-						 fill="none"stroke="#e0a65a" 
-						 stroke-width="20"
-		/>
-		<path z-indes="10" transform="translate(0 4)" stroke="#4ea5e7" fill="none" stroke-width="24" d="M  3300 2150 A 20 100 0 0 0 3300 2850"/>
+		<path class="blue-ring-b" transform="translate(-1 6)" stroke="#4ea5e7" fill="none" stroke-width="24"
+			d="M 3300 2150 A 20 120 0 1 1 3300 2850" />
+		<path class="green-ring-b" transform="translate(-1 6)" stroke="#59c365" fill="none" stroke-width="24"
+			d="M 2300 3150 A 30 150 0 0 0 2300 1850" />
+		<path class="pink-ring-b" transform="translate(-1 6)" stroke="#4ea5e7" fill="none" stroke-width="24"
+			d="M 3300 2150 A 20 120 0 1 1 3300 2850" />
+		<path class="pinkRed-ring-b" transform="translate(-1 6)" stroke="#4ea5e7" fill="none" stroke-width="24"
+			d="M 3300 2150 A 20 120 0 1 1 3300 2850" />
+		<ellipse cx="2500" cy="2500" rx="1500" ry="75" fill="none" stroke="#e0a65a" stroke-width="20" />
+		<path class="blue-ring-f" z-indes="10" transform="translate(0 4)" stroke="#4ea5e7" fill="none" stroke-width="27"
+			d="M 3300 2150 A 20 120 0 0 0 3300 2850" />
+		<path class="green-ring-f" z-indes="10" transform="translate(0 4)" stroke="#59c365" fill="none" stroke-width="27"
+			d="M 2300 3150 A 30 150 0 1 1 2300 1850" />
+		<path class="pink-ring-f" z-indes="10" transform="translate(0 4)" stroke="#4ea5e7" fill="none" stroke-width="27"
+			d="M 3300 2150 A 20 120 0 0 0 3300 2850" />
+		<path class="pinkRed-ring-f" z-indes="10" transform="translate(0 4)" stroke="#4ea5e7" fill="none" stroke-width="27"
+			d="M 3300 2150 A 20 120 0 0 0 3300 2850" />
 	</svg>
-	<button onclick="singing()"> 
+	<button onclick="singing()">
 		Animate
 	</button>
+	<svg width="500" height="400">
+		<path id="follow" d="M 50,300 C 100,100 300,0, 350,250 L 450,200" />
+		<path id="squiggle" d="M0,0" />
+	</svg>
 	<script>
 		let target = document.querySelector('ellipse');
 
 		const singing = () => {
-			gsap.to(target, {attr: {rx: 2000}, 
-											 duration: 3, 
-											 ease: "elastic"});
-			gsap.to(target, {attr: {ry:150}, 
-											 duration: .02, 
-											 ease: "roughEase",
-											 repeat: -1,
-											 yoyo: true});
-
+			gsap.to(target, {
+				attr: { rx: 2000 },
+				duration: 3,
+				ease: "elastic"
+			});
+			gsap.to(target, {
+				attr: { ry: 150 },
+				duration: .05,
+				ease: "roughEase",
+				repeat: -1,
+				yoyo: true
+			});
+			gsap.to('.blue-ring-b', {
+				attr: { d: "M 3300 1800 A 20 120 0 1 1 3300 3200" },
+				duration: 2,
+				ease: "roughEase",
+				repeat: -1,
+				yoyo: true
+			})
+			gsap.to('.blue-ring-f', {
+				attr: { d: "M 3300 1800 A 20 120 0 0 0 3300 3200" },
+				duration: 2,
+				ease: "roughEase",
+				repeat: -1,
+				yoyo: true
+			})
 		}
+
+		function makeSquiggle(squigglePathId, followPathId, squiggleStep, squiggleAmplitude) {
+			var followPath = document.getElementById(followPathId);
+			var pathLen = followPath.getTotalLength();
+
+			// Adjust step so that there are a whole number of steps along the path
+			var numSteps = Math.round(pathLen / squiggleStep);
+
+			var pos = followPath.getPointAtLength(0);
+			var newPath = "M" + [pos.x, pos.y].join(',');
+			var side = -1;
+			for (var i = 1; i <= numSteps; i++) {
+				var last = pos;
+				var pos = followPath.getPointAtLength(i * pathLen / numSteps);
+
+				// Find a point halfway between last and pos. Then find the point that is
+				// perpendicular to that line segment, and is squiggleAmplitude away from
+				// it on the side of the line designated by 'side' (-1 or +1).
+				// This point will be the control point of the quadratic curve forming the
+				// squiggle step.
+
+				// The vector from the last point to this one
+				var vector = {
+					x: (pos.x - last.x),
+					y: (pos.y - last.y)
+				};
+				// The length of this vector
+				var vectorLen = Math.sqrt(vector.x * vector.x + vector.y * vector.y);
+				// The point halfwasy between last point and tis one
+				var half = {
+					x: (last.x + vector.x / 2),
+					y: (last.y + vector.y / 2)
+				};
+				// The vector that is perpendicular to 'vector'
+				var perpVector = {
+					x: -(squiggleAmplitude * vector.y / vectorLen),
+					y: (squiggleAmplitude * vector.x / vectorLen)
+				};
+				// No calculate the control point position
+				var controlPoint = {
+					x: (half.x + perpVector.x * side),
+					y: (half.y + perpVector.y * side)
+				};
+				newPath += ("Q" + [controlPoint.x, controlPoint.y, pos.x, pos.y].join(','));
+				// Switch the side (for next step)
+				side = -side;
+			}
+			var squigglePath = document.getElementById(squigglePathId);
+			squigglePath.setAttribute("d", newPath);
+		}
+
+
+		makeSquiggle("squiggle", "follow", 25, 20);
 	</script>
+
 </body>
+
 </html>
