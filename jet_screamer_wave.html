@@ -49,7 +49,7 @@
 	}
 
 	svg {
-		width: 1200px;
+		width: 1200;
 	}
 
 	#follow {
@@ -57,16 +57,25 @@
 		stroke: grey;
 		stroke-width: 2;
 	}
-
+	#follow_line{
+		width: 500px;
+	}
 	#squiggle {
 		fill: none;
-		stroke: red;
+		stroke: rgb(108, 51, 241);
 		stroke-width: 2;
 	}
 </style>
 
 <body>
 	<img src="../Images/jet_screamer_soundwave.jpg" alt="" srcset="">
+	<svg viewBox="0 0 500 200" fill="none">
+		<path d="M20 100 Q40 -200, 60 100" stroke="pink" ></path>
+	</svg>
+	<svg id="follow_line"width="500" height="400">
+		<path id="follow" d="M 50,300 h 50,100 100,100 350,250 " />
+		<path id="squiggle" d="M0,0" />
+	</svg>
 	<svg viewBox="0 0 500 200" >
 		<path d="M 20 180" />
 	</svg>
@@ -93,10 +102,7 @@
 	<button onclick="singing()">
 		Animate
 	</button>
-	<svg width="500" height="400">
-		<path id="follow" d="M 50,300 C 100,100 0,100 350,250 " />
-		<path id="squiggle" d="M0,0" />
-	</svg>
+
 	<script>
 		let target = document.querySelector('ellipse');
 
@@ -130,6 +136,7 @@
 		}
 
 		function makeSquiggle(squigglePathId, followPathId, squiggleStep, squiggleAmplitude) {
+			//d="M 50,300 h 50,100 100,100 350,250 "
 			var followPath = document.getElementById(followPathId);
 			var pathLen = followPath.getTotalLength();
 
@@ -180,7 +187,7 @@
 		}
 
 
-		makeSquiggle("squiggle", "follow", 25, 20);
+		makeSquiggle("squiggle", "follow", 5, 20);
 	</script>
 
 </body>
