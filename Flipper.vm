@@ -1,0 +1,20 @@
+##
+#macro(Boilerplate $block $blockXml)
+		#import("site://IU-FRAME-TEST.common/velocity/1.x.Parser")
+		#set($nil = "#___ParseBlock($block.path, $block.siteName)")
+
+		<div class="$sectionClasses" id="$sectionID">
+			<div class="row">
+				<div class="layout">
+
+				</div>
+			</div>
+		</div>
+
+			<include action="hide" name="custom-css">
+			</include>
+
+#end
+
+##set($b = $_.locateBlock('/jay/blocks/Boilerplate', 'IU-FRAME-TEST.main'))
+##Boilerplate($b)
