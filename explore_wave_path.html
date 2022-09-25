@@ -22,9 +22,29 @@
 					stroke="red" 
 					fill="none"
 		/>
+		<path id="gen_path"
+		stroke="black" fill="red"></path>
+		<!-- Q: (control point) (end point)  -->
 		<path d="M 10 150 Q 20 10 30 150
 				     Q 40 290 50 150
 						 Q 60 -30 70 150" stroke="black" fill="transparent"/>
 	</svg>
+	<script>
+		const startingPoint = "M 10 150";
+		const numNodes = 400;
+		let currentX = 10, currentY=150;
+		let maxY = 290, minY = 10;
+		//WHEN YOU SIT BACK DOWN, FIX THE PATH VALUE GENERATION
+		let pathContent = [startingPoint];
+		for(let i = 0; i < numNodes; i+=2){
+			pathContent.push(`Q ${(currentX + 10)} ${maxY} ${currentX + 20} 150
+												Q ${(currentX + 30)} ${minY} ${currentX + 40} 150`);
+			currentX += 40;
+		}
+		let path = document.getElementById('gen_path');
+		path.setAttribute('d', pathContent.join(' '));
+		// path.getAttribute('d');
+		// path.setAttributeNS('http://www.w3.org/2000/svg', 'd', pathContent.join(' '));
+	</script>
 </body>
 </html>
