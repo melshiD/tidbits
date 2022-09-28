@@ -31,7 +31,7 @@ class Controls{
 				case "ArrowLeft":
 					this.left = false;
 					break;
-				case "ArrowrRight":
+				case "ArrowRight":
 					this.right = false;
 					break;
 				case "ArrowUp":
