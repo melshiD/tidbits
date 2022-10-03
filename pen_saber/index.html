@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Light Saber Effect</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<canvas id="myCanvas"></canvas>
+	<script>
+		navigator.mediaDevices.getUserMedia({video: true})
+			.then(function(rawData){
+				const video = document.createElement('video');
+				video.srcObject = rawData;
+				video.play();
+				video.onloadeddata = function(){
+					const canvas = document.getElementById('myCanvas');
+					canvas.width = video.videoWidth;
+					canvas.height = video.videoHeight;
+
+					const lse = new LightSaberEffect(canvas, video);
+				}
+			}).catch(function(err){alert(err)});
+	</script>
+	<script src="light-saber.js"></script>
+	<script src="utils.js"></script>
+</body>
+</html>
