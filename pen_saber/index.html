@@ -8,8 +8,17 @@
 	<link rel="stylesheet" href="style.css">
 </head>
 <body>
+	<input type="range" id="slider" min="0" max="100" value="42" />
+	<input type="color" name="selector" id="colorSelector">
 	<canvas id="myCanvas"></canvas>
 	<script>
+		const slider = document.getElementById('slider');
+		let sliderValue = 60;
+		slider.addEventListener('input', (e) => {
+			console.log(e.target.value);
+			sliderValue = e.target.value;
+		});
+
 		navigator.mediaDevices.getUserMedia({video: true})
 			.then(function(rawData){
 				const video = document.createElement('video');

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Audio API</title>
+</head>
+
+<body>
+	<button type="button" id="playButton">Play Button</button>
+	<script>
+		let button = document.getElementById('playButton');
+
+		const audioCtx = new AudioContext();
+
+		const buffer = audioCtx.createBuffer(
+			1,
+			audioCtx.sampleRate * 1,
+			audioCtx.sampleRate
+		);
+
+		const channelData = buffer.getChannelData(0);
+
+		for (let i = 0; i < buffer.length; i++) {
+			channelData[i] = Math.random() * 2 - 1;
+		}
+
+		const primaryGainControl = audioCtx.createGain();
+		primaryGainControl.gain.setValueAtTime(0.05, 0);
+		primaryGainControl.connect(audioCtx.destination);
+
+		button.addEventListener('click', () => {
+			const whiteNoiseSource = audioCtx.createBufferSource();
+			whiteNoiseSource.buffer = buffer;
+			whiteNoiseSource.connect(primaryGainControl);
+			whiteNoiseSource.start();
+		});
+	</script>
+</body>
+
+</html>
