@@ -10,8 +10,14 @@
 
 <body>
 	<button type="button" id="playButton">Play Button</button>
+	<button type="button" id="snareButton">Snare Button</button>
+	<button type="button" id="kickButton">Kick Button</button>
+	<button type="button" id="hiHatButton">Hi Hat</button>
 	<script>
 		let button = document.getElementById('playButton');
+		let snareButton = document.getElementById('snareButton');
+		let kickButton = document.getElementById('kickButton');
+		let hiHatButton = document.getElementById('hiHatButton');
 
 		const audioCtx = new AudioContext();
 
@@ -28,7 +34,7 @@
 		}
 
 		const primaryGainControl = audioCtx.createGain();
-		primaryGainControl.gain.setValueAtTime(0.05, 0);
+		primaryGainControl.gain.setValueAtTime(0.03, 0);
 		primaryGainControl.connect(audioCtx.destination);
 
 		button.addEventListener('click', () => {
@@ -37,7 +43,75 @@
 			whiteNoiseSource.connect(primaryGainControl);
 			whiteNoiseSource.start();
 		});
-	</script>
+
+		const snareFilter = audioCtx.createBiquadFilter();
+		snareFilter.type = 'highpass';
+		snareFilter.frequency.value = 1500;
+		snareFilter.connect(primaryGainControl);
+
+		snareButton.addEventListener('click', () => {
+			const whiteNoiseSource = audioCtx.createBufferSource();
+			whiteNoiseSource.buffer = buffer;
+			
+			const whiteNoiseGain = audioCtx.createGain();
+			whiteNoiseGain.gain.setValueAtTime(1, audioCtx.currentTime);
+			whiteNoiseGain.gain.exponentialRampToValueAtTime(
+				0.01, audioCtx.currentTime + 0.2
+			);
+			whiteNoiseSource.connect(whiteNoiseGain);
+			whiteNoiseGain.connect(snareFilter);
+
+			whiteNoiseSource.start();
+			whiteNoiseSource.stop(audioCtx.currentTime + 0.2);
+
+			const snareOscillator = audioCtx.createOscillator();
+			snareOscillator.type = "triangle";
+			snareOscillator.frequency.setValueAtTime(250, audioCtx.currentTime);
+
+			const oscillatorGain = audioCtx.createGain();
+			oscillatorGain.gain.setValueAtTime(0.7, audioCtx.currentTime);
+			oscillatorGain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+			snareOscillator.connect(oscillatorGain);
+			oscillatorGain.connect(primaryGainControl);
+			snareOscillator.start();
+			snareOscillator.stop(audioCtx.currentTime + 0.2);
+		});
+
+		kickButton.addEventListener('click', () => {
+			const kickOscillator = audioCtx.createOscillator();
+			kickOscillator.frequency.setValueAtTime(150.6, 0);
+			kickOscillator.frequency.exponentialRampToValueAtTime(
+				0.001, 
+				audioCtx.currentTime + 5
+			);
+			const kickGain = audioCtx.createGain();
+			kickGain.gain.setValueAtTime(1, 0);
+			kickGain.gain.exponentialRampToValueAtTime(
+				0.001,
+				audioCtx.currentTime + 0.5
+			);
+			kickOscillator.connect(kickGain);
+			kickGain.connect(primaryGainControl);
+			kickOscillator.start();
+			kickOscillator.stop(audioCtx.currentTime + 0.5);
+		});
+
+		const HIHAT_URL = "https://unpkg.com/@teropa/drumkit@1.1.0/src/assets/hatOpen2.mp3";
+
+		hiHatButton.addEventListener('click', async () => {
+			const res = await fetch(HIHAT_URL);
+			const soundBuffer = await res.arrayBuffer();
+			const hiHatBuffer = await audioCtx.decodeAudioData(soundBuffer);
+
+			const hiHatSource = audioCtx.createBufferSource();
+			hiHatSource.buffer = hiHatBuffer;
+
+			hiHatSource.connect(primaryGainControl);
+			hiHatSource.start();
+		});
+
+
+</script>
 </body>
 
 </html>
