@@ -21,7 +21,7 @@
         this.oscillator = this.audioContext.createOscillator();
 
         this.oscillator.type = 'triangle';
-        this.oscillator.frequency.setValueAtTime(200, this.audioContext.currentTime); // value in hertz
+        this.oscillator.frequency.setValueAtTime(440, this.audioContext.currentTime); // value in hertz
 
         
         
@@ -32,15 +32,15 @@
         
         this.masterGain = this.audioContext.createGain();
         this.masterGain.gain.setValueAtTime(0, this.audioContext.currentTime);
-        // this.masterGain.gain.exponentialRampToValueAtTime(0.6, this.audioContext.currentTime + 2);
+        this.masterGain.gain.linearRampToValueAtTime(0.3, this.audioContext.currentTime + 2);
         this.gainNode.connect(this.masterGain);
 
         this.masterGain.connect(this.audioContext.destination)
 
-        setInterval(()=>{
-            this.gainNode.gain.linearRampToValueAtTime(0.5, this.audioContext.currentTime+0.1);
-            this.gainNode.gain.exponentialRampToValueAtTime(1, this.audioContext.currentTime+0.4);
-        },400)
+        // setInterval(()=>{
+        //     this.gainNode.gain.linearRampToValueAtTime(0.3, this.audioContext.currentTime+0.1);
+        //     this.gainNode.gain.exponentialRampToValueAtTime(1, this.audioContext.currentTime+0.4);
+        // },11400)
     }
 }
 let sound = new AudioEffect();

@@ -10,7 +10,7 @@ class LightSaberEffect{
 		this.ctx.drawImage(this.video, 0, 0,
 			this.canvas.width, this.canvas.height);
 
-		const locs = getMarkedLocations(this.ctx, [249, 242, 176], sliderValue);
+		const locs = getMarkedLocations(this.ctx, [80, 172, 246], sliderValue);
 		if(locs.length>0){
 			for(let i=0; i<locs.length;i++){
 				this.ctx.beginPath();
